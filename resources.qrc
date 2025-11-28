@@ -1,0 +1,19 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>ui/main.qml</file>
+    <file>default.json</file>
+    <file>ui/qmldir</file>
+    <file>ui/Palette.qml</file>
+    <file>ui/SensorSlot.qml</file>
+    <file>ui/Value.qml</file>
+    <file>ui/MultiValue.qml</file>
+    <file>ui/SystemProfile.qml</file>
+    <file>ui/CpuInfo.qml</file>
+    <file>ui/SlimbookProfile.qml</file>
+    <file>ui/TDP.qml</file>
+    <file>images/power-saver.svg</file>
+    <file>images/balanced.svg</file>
+    <file>images/performance.svg</file>
+    <file>images/slimbook-cpu.svg</file>
+</qresource>
+</RCC>
