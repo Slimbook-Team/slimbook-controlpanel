@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2025 Slimbook development team <dev@slimbook.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import "ui" as UI
+import "." as UI
 
 import QtQuick
 import QtQuick.Layouts
@@ -65,7 +65,7 @@ QQC2.Pane {
                 var item = config[n].layout[i];
 
                 if (item.type == "Value") {
-                    var component = Qt.createComponent("ui/Value.qml");
+                    var component = Qt.createComponent("Value.qml");
                     var o = component.createObject(container,{
                             sensor:item.sensor,
                             label:item.label,
@@ -79,7 +79,7 @@ QQC2.Pane {
                 }
 
                 if (item.type == "MultiValue") {
-                    var component = Qt.createComponent("ui/MultiValue.qml");
+                    var component = Qt.createComponent("MultiValue.qml");
                     var o = component.createObject(container,{
                         sensor:item.sensor,
                         label:item.label,
@@ -93,7 +93,7 @@ QQC2.Pane {
                 }
 
                 if (item.type == "SystemProfile") {
-                    var component = Qt.createComponent("ui/SystemProfile.qml");
+                    var component = Qt.createComponent("SystemProfile.qml");
                     var o = component.createObject(container,{});
 
                     o.Layout.row = item.row;
@@ -101,7 +101,7 @@ QQC2.Pane {
                 }
 
                 if (item.type == "CpuInfo") {
-                    var component = Qt.createComponent("ui/CpuInfo.qml");
+                    var component = Qt.createComponent("CpuInfo.qml");
                     var o = component.createObject(container,{});
 
                     o.Layout.row = item.row;
@@ -109,7 +109,7 @@ QQC2.Pane {
                 }
 
                 if (item.type == "SlimbookProfile") {
-                    var component = Qt.createComponent("ui/SlimbookProfile.qml");
+                    var component = Qt.createComponent("SlimbookProfile.qml");
                     var o = component.createObject(container,{});
 
                     o.Layout.row = item.row;
@@ -117,7 +117,7 @@ QQC2.Pane {
                 }
                 
                 if (item.type == "TDP") {
-                    var component = Qt.createComponent("ui/TDP.qml");
+                    var component = Qt.createComponent("TDP.qml");
                     var o = component.createObject(container,{});
 
                     o.Layout.row = item.row;

@@ -1,0 +1,158 @@
+[
+    {
+        "name" : "Aorus B550",
+        "match" : {"type" : "dmi", "vendor" : "Gigabyte Technology Co., Ltd.", "product" : "B550 AORUS ELITE V2"},
+        "layout": [
+            {
+                "type" : "SlimbookProfile",
+                "col" : 0,
+                "row" : 0
+            },
+            {
+                "type" : "SystemProfile",
+                "col" : 2,
+                "row" : 1
+            },
+            {
+                "type" : "Value",
+                "col" : 0,
+                "row" : 1,
+                "sensor": "rapl.intel-rapl:0",
+                "label" : "Power",
+                "unit" : "W"
+            },
+            {
+                "type" : "MultiValue",
+                "col" : 1,
+                "row" : 1,
+                "sensor": "cpu.load.cpu[0-9]+",
+                "label" : "Load",
+                "unit" : "%",
+                "warning": 20,
+                "critical" : 90
+            },
+            {
+                "type" : "Value",
+                "col" : 1,
+                "row" : 2,
+                "sensor": "cpu.freq.average",
+                "label" : "Frequency",
+                "unit" : ""
+            },
+            {
+                "type" : "Value",
+                "col" : 1,
+                "row" : 0,
+                "sensor": "hwmon.fan.hwmon9/fan1_input",
+                "label" : "Fan 0",
+                "unit" : ""
+            },
+            {
+                "type" : "Value",
+                "col" : 2,
+                "row" : 0,
+                "sensor": "hwmon.fan.hwmon9/fan2_input",
+                "label" : "Fan 1",
+                "unit" : ""
+            },
+            {
+                "type" : "Value",
+                "col" : 0,
+                "row" : 2,
+                "sensor": "ram.free",
+                "label" : "Ram free",
+                "unit" : "GB"
+            }
+        ]
+    },
+    {
+        "name" : "EVO",
+        "match" : {
+            "type" : "family",
+            "family" : "evo"
+        },
+        "layout" : [
+            {
+                "type" : "SlimbookProfile",
+                "col" : 0,
+                "row" : 0
+            },
+            {
+                "type" : "SystemProfile",
+                "col" : 1,
+                "row" : 0
+            },
+            {
+                "type" : "Value",
+                "col" : 2,
+                "row" : 0,
+                "sensor": "rapl.intel-rapl:0",
+                "label" : "Power",
+                "unit" : "W"
+            },
+            {
+                "type" : "MultiValue",
+                "col" : 0,
+                "row" : 1,
+                "sensor": "cpu.load.cpu[0-9]+",
+                "label" : "Load",
+                "unit" : "%",
+                "warning": 20,
+                "critical" : 90
+            },
+            {
+                "type" : "Value",
+                "col" : 1,
+                "row" : 1,
+                "sensor": "ram.usage",
+                "label" : "RAM",
+                "unit" : "G"
+            },
+            {
+                "type" : "Value",
+                "col" : 2,
+                "row" : 1,
+                "sensor": "battery.BAT0/capacity",
+                "label" : "Battery",
+                "unit" : "%"
+            },
+            {
+                "type" : "CpuInfo",
+                "col" : 0,
+                "row" : 2
+            },
+            {
+                "type" : "TDP",
+                "col" : 1,
+                "row" : 2
+            },
+            {
+                "type" : "Value",
+                "col" : 0,
+                "row" : 3,
+                "sensor": "hwmon.fan.hwmon9/fan1_input",
+                "label" : "Fan 0",
+                "unit" : ""
+            },
+            {
+                "type" : "Value",
+                "col" : 1,
+                "row" : 3,
+                "sensor": "hwmon.fan.hwmon9/fan2_input",
+                "label" : "Fan 1",
+                "unit" : ""
+            },
+            {
+                "type" : "Value",
+                "col" : 2,
+                "row" : 3,
+                "sensor": "hwmon.temp.hwmon7/temp1_input",
+                "label" : "Temp",
+                "unit" : "",
+                "warning": 40,
+                "critical": 45
+            }
+            
+        ]
+    }
+]

@@ -27,7 +27,7 @@ Item {
             Image {
                 Layout.alignment: Qt.AlignHCenter
                 
-                source: bridge.upowerProfile + ".svg"
+                source: "../images/" + bridge.upowerProfile + ".svg"
                 sourceSize.width: 64
                 sourceSize.height: 64
             }

@@ -50,7 +50,7 @@ int main(int argc,char*argv[])
     ctxt->setContextProperty(QStringLiteral("config"), config.toVariant());
     ctxt->setContextProperty(QStringLiteral("bridge"), bridge);
 
-    view.setSource(QUrl("qrc:/main.qml"));
+    view.setSource(QUrl("qrc:/ui/main.qml"));
     view.show();
 
     app.exec();

@@ -53,7 +53,7 @@ Item {
                 id: icon
                 Layout.alignment: Qt.AlignHCenter
                 
-                source: "slimbook-cpu.svg"
+                source: "../images/slimbook-cpu.svg"
                 sourceSize.width: 64
                 sourceSize.height: 64
                 
