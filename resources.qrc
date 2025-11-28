@@ -15,5 +15,7 @@
     <file>images/balanced.svg</file>
     <file>images/performance.svg</file>
     <file>images/slimbook-cpu.svg</file>
+    <file>images/menu-dashboard.svg</file>
+    <file>images/menu-raw.svg</file>
 </qresource>
 </RCC>
