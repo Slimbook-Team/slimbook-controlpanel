@@ -8,6 +8,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Material
 import QtQuick.Controls as QQC2
+import Qt.labs.qmlmodels
 
 QQC2.Pane {
     id: main
@@ -20,22 +21,15 @@ QQC2.Pane {
         ListElement {
             name: "Dashboard"
             index: 0
+            iconName: "../images/menu-dashboard.svg"
         }
         
         ListElement {
             name: "Data"
             index: 1
+            iconName: "../images/menu-raw.svg"
         }
         
-        ListElement {
-            name: "Info"
-            index: 2
-        }
-        
-        ListElement {
-            name: "Settings"
-            index: 3
-        }
     }
     
     ListView {
@@ -44,16 +38,20 @@ QQC2.Pane {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: 128
+        width: 64
         
         delegate: QQC2.Button {
             required property string name
             required property int index
+            required property string iconName
             
-            text: name
+            //text: name
+            icon.source: iconName
+            icon.width: 32
+            icon.height: 32
             
             onClicked: {
-                console.log("Move to " + index);
+                //console.log("Move to " + index);
                 swipe.setCurrentIndex(index);
             }
         }
@@ -236,9 +234,74 @@ QQC2.Pane {
             id: rawdata
             //anchors.fill: parent
             //visible: false
+
+            Connections {
+                target: bridge
+
+                function onSensorsUpdated()
+                {
+
+
+                    tableModel.clear();
+
+                    for (var item in bridge.sensorList) {
+
+                        tableModel.appendRow(
+                            {
+                                sensor: bridge.sensorList[item],
+                                label: "",
+                                value: bridge.readSensor(bridge.sensorList[item])
+
+                            });
+
+                    }
+
+                    tableView.forceLayout();
+                }
+            }
             
-            Text {
-                text: "Raw data"
+            TableModel {
+                id: tableModel
+                TableModelColumn {
+                    display : "sensor"
+                }
+
+                TableModelColumn {
+                    display : "label"
+                }
+
+                TableModelColumn {
+                    display : "value"
+                }
+
+                rows: []
+            }
+
+            TableView {
+                id: tableView
+                anchors.fill: parent
+
+                model: tableModel
+                clip: true
+                columnSpacing: 1
+                rowSpacing: 1
+                interactive: true
+
+
+
+                delegate: Rectangle {
+                    implicitWidth: (column == 0 ) ? 400 : 96
+
+                    implicitHeight: 32
+                    border.width: 1
+
+                    Text {
+                        text: display
+                        anchors.centerIn: parent
+                    }
+                }
+
+
             }
             
         }
