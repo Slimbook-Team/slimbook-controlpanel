@@ -52,8 +52,12 @@ Item {
             
             Canvas {
                 id: canvas
-                width: 120
+                //width: 120
                 Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.leftMargin: 4
+                Layout.rightMargin: 4
+                Layout.topMargin: 8
                 //anchors.centerIn: parent
                 Layout.alignment: Qt.AlignHCenter
 
@@ -80,6 +84,13 @@ Item {
 
                         xpos = xpos + blockWidth;
                     }
+                    
+                    ctx.strokeStyle = UI.Palette.base;
+                    ctx.beginPath();
+                    ctx.moveTo(0,height);
+                    ctx.lineTo(width,height);
+                    ctx.stroke();
+                    ctx.closePath();
                 }
             }
             

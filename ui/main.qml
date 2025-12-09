@@ -225,10 +225,8 @@ QQC2.Pane {
                     
                 }
                 
-
             }
         }
-        
         
         QQC2.Pane {
             id: rawdata
@@ -240,7 +238,6 @@ QQC2.Pane {
 
                 function onSensorsUpdated()
                 {
-
 
                     tableModel.clear();
 

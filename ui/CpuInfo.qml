@@ -30,13 +30,12 @@ Item {
         console.log(cpuVendor);
     }
 
-    Rectangle {
+    Image {
         anchors.fill: parent
-        color: "transparent"
-        border.color: UI.Palette.base
-        border.width: 2
-        radius: 8
-
+        source: "../images/cpu-slot.svg"
+        sourceSize.width: 128
+        sourceSize.height: 128
+        
         ColumnLayout {
             anchors.fill:parent
 

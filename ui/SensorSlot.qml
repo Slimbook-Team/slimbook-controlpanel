@@ -11,6 +11,8 @@ Item {
 
     property string sensor : ""
     property double value : 0.0
+    
+    signal updated();
 
     Connections {
         target: bridge
@@ -18,6 +20,7 @@ Item {
         function onSensorsUpdated()
         {
             sensorSlot.value = bridge.readSensor(sensorSlot.sensor);
+            updated();
         }
     }
 }

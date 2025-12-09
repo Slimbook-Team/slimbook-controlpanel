@@ -11,11 +11,13 @@
     <file>ui/CpuInfo.qml</file>
     <file>ui/SlimbookProfile.qml</file>
     <file>ui/TDP.qml</file>
+    <file>ui/Graph.qml</file>
     <file>images/power-saver.svg</file>
     <file>images/balanced.svg</file>
     <file>images/performance.svg</file>
     <file>images/slimbook-cpu.svg</file>
     <file>images/menu-dashboard.svg</file>
     <file>images/menu-raw.svg</file>
+    <file>images/cpu-slot.svg</file>
 </qresource>
 </RCC>

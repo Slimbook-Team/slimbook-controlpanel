@@ -19,6 +19,10 @@ SensorSlot {
     property int col : 0
     property int row : 0
 
+    onUpdated: {
+        graph.push(value);
+    }
+    
     Rectangle {
         anchors.fill: parent
         color: "transparent"
@@ -39,6 +43,14 @@ SensorSlot {
                 text: (unit!="") ? value.toFixed(2) + " "+unit : value.toFixed(2)
             }
 
+            Graph {
+                id: graph
+                Layout.fillWidth: true
+                Layout.minimumHeight: 32
+                Layout.leftMargin: 4
+                Layout.rightMargin: 4
+            }
+            
             Text {
                 Layout.minimumHeight: 32
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
@@ -48,6 +60,7 @@ SensorSlot {
                 color: UI.Palette.base
                 text: label
             }
+            
         }
     }
 }
