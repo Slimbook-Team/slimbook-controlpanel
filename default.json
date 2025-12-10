@@ -88,8 +88,20 @@
                 "sensor": "cpu.load.cpu[0-9]+",
                 "label" : "Load",
                 "unit" : "%",
-                "warning": 20,
-                "critical" : 90
+                "warning": 90,
+                "critical" : 99,
+                "minimum" : 0,
+                "maximum" : 100
+            },
+            {
+                "type" : "MultiValue",
+                "col" : 2,
+                "row" : 2,
+                "sensor": "cpu.freq.cpu[0-9]+",
+                "label" : "Frequency",
+                "unit" : "Mhz",
+                "minimum" : 600,
+                "maximum" : 5100
             },
             {
                 "type" : "Value",
@@ -140,8 +152,8 @@
                 "sensor": "hwmon.temp.hwmon7/temp1_input",
                 "label" : "Temp",
                 "unit" : "",
-                "warning": 40,
-                "critical": 45
+                "warning": 45,
+                "critical": 60
             }
             
         ]

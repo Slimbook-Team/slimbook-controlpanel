@@ -12,8 +12,8 @@ import Qt.labs.qmlmodels
 
 QQC2.Pane {
     id: main
-    width: 512
-    height: 512
+    width: 640
+    height: 640
     
     ListModel {
         id: winlist
@@ -148,6 +148,8 @@ QQC2.Pane {
                                 sensor:item.sensor,
                                 label:item.label,
                                 unit:item.unit,
+                                minimum: item.minimum,
+                                maximum: item.maximum,
                                 warning: (item.warning === undefined) ? 100000.0 : item.warning,
                                                            critical: (item.critical === undefined) ? 100000.0 : item.critical,
                             });

@@ -17,6 +17,8 @@ Item {
     property string unit: ""
     property double warning: 100000.0
     property double critical: 100000.0
+    property double minimum: 0
+    property double maximum: 100000.0
 
     width: 128
     height: 128
@@ -71,16 +73,38 @@ Item {
                     //console.log(blockWidth);
 
                     var xpos = 0;
-
+                    var range = maximum - minimum;
+                    
                     ctx.fillStyle = Qt.rgba(1, 0, 0, 1);
                     for (var src in values) {
 
                         ctx.fillStyle = UI.Palette.base;
-
-                        var value = values[src];
+                        var raw = values[src];
+                        
+                        var value = (raw - minimum) / range;
+                        if (value < 0) {
+                            value = 0;
+                        }
+                        
+                        if (value > 1.0) {
+                            value = 1.0;
+                        }
+                        
+                        if (raw < warning) {
+                            ctx.fillStyle = UI.Palette.base;
+                        }
+                        else {
+                            if (raw < critical) {
+                                ctx.fillStyle = UI.Palette.warning;
+                            }
+                            else {
+                                ctx.fillStyle = UI.Palette.critical;
+                            }
+                        }
+                        
                         //console.log("mv ",src," ",value);
 
-                        ctx.fillRect(xpos, height - value, blockWidth, value);
+                        ctx.fillRect(xpos, height - (value*height), blockWidth, height);
 
                         xpos = xpos + blockWidth;
                     }

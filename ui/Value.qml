@@ -13,6 +13,8 @@ SensorSlot {
     property string unit: ""
     property double warning: 100000.0
     property double critical: 100000.0
+    property double minimum: -100000.0
+    property double maximum: 100000.0
 
     width: 128
     height: 128

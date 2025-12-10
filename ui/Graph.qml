@@ -49,6 +49,58 @@ Canvas {
         var pos = 0;
         var range = pmax - pmin;
         
+        var saturation = false;
+        
+        for (var n=0;n<points;n++) {
+            var raw = data[n];
+            var value = raw/range;
+            
+            if (raw < warning) {
+                ctx.fillStyle = UI.Palette.base;
+            }
+            else {
+                if (raw < critical) {
+                    ctx.fillStyle = UI.Palette.warning;
+                }
+                else {
+                    ctx.fillStyle = UI.Palette.critical;
+                }
+            }
+            
+            if (value < 0) {
+                value = 0;
+            }
+            
+            if (value > 1.0) {
+                value = 1.0;
+                saturarion = true;
+            }
+            
+            ctx.fillRect(pos-(pw/2),height-(value*height),pw,height);
+            
+            pos = pos + pw;
+        }
+        
+        ctx.strokeStyle = UI.Palette.base;
+        ctx.beginPath();
+        if (saturation) {
+            ctx.strokeStyle = UI.Palette.critical;
+        }
+        
+        ctx.moveTo(0,0);
+        ctx.lineTo(width,0);
+        
+        ctx.strokeStyle = UI.Palette.base;
+        ctx.moveTo(0,height);
+        ctx.lineTo(width,height);
+        
+        ctx.moveTo(0,height/2);
+        ctx.lineTo(width,height/2);
+        
+        ctx.closePath();
+        ctx.stroke();
+        
+        /*
         ctx.strokeStyle = UI.Palette.base;
         ctx.strokeRect(0,0,width,height);
         
@@ -72,6 +124,8 @@ Canvas {
         
         ctx.closePath();
         ctx.stroke();
+        
+        */
     }
 
 }
