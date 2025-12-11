@@ -66,7 +66,7 @@ QQC2.Pane {
         
         currentIndex: 0
         orientation: Qt.Vertical
-        interactive: true
+        interactive: false
         
         onCurrentIndexChanged: {
             console.log(currentIndex);
@@ -244,11 +244,11 @@ QQC2.Pane {
                     tableModel.clear();
 
                     for (var item in bridge.sensorList) {
-
+                        var sensorName = bridge.sensorList[item];
                         tableModel.appendRow(
                             {
-                                sensor: bridge.sensorList[item],
-                                label: "",
+                                sensor: sensorName,
+                                label: bridge.getSensorLabel(sensorName),
                                 value: bridge.readSensor(bridge.sensorList[item])
 
                             });
@@ -279,6 +279,9 @@ QQC2.Pane {
             TableView {
                 id: tableView
                 anchors.fill: parent
+                
+                property var columnWidths: [350,300, 96]
+                columnWidthProvider: function (column) { return columnWidths[column] }
 
                 model: tableModel
                 clip: true
@@ -286,16 +289,14 @@ QQC2.Pane {
                 rowSpacing: 1
                 interactive: true
 
-
-
                 delegate: Rectangle {
-                    implicitWidth: (column == 0 ) ? 400 : 96
+                    //implicitWidth: (column == 0 ) ? 400 : 96
 
                     implicitHeight: 32
                     border.width: 1
 
                     Text {
-                        text: display
+                        text: (column == 2) ? display.toFixed(2) : display
                         anchors.centerIn: parent
                     }
                 }

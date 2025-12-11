@@ -44,6 +44,7 @@ namespace slimbook
 
             Q_INVOKABLE void updateSensors();
             Q_INVOKABLE double readSensor(QString sensor);
+            Q_INVOKABLE QString getSensorLabel(QString sensor);
             Q_INVOKABLE QString getCPUName();
             Q_INVOKABLE QString getQC71Profile();
             Q_INVOKABLE QVariantList getTDP();

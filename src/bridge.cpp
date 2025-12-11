@@ -90,6 +90,17 @@ double Bridge::readSensor(QString sensor)
     return value;
 }
 
+QString Bridge::getSensorLabel(QString sensor)
+{
+    QString value;
+    
+    QList<QVariant> reply = cpIface->call("getSensorLabel",sensor).arguments();
+    if (reply.count() > 0) {
+        value = reply.at(0).toString();
+    }
+    return value;
+}
+
 QString Bridge::getCPUName()
 {
     QString value;

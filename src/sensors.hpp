@@ -22,6 +22,7 @@ namespace slimbook
             public:
 
             std::string name;
+            std::string label;
             double value;
             double raw;
             bool enabled;

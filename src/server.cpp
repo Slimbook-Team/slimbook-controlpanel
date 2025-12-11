@@ -35,6 +35,11 @@ double ServerAdaptor::readSensor(QString sensor)
     return m_server->readSensor(sensor);
 }
 
+QString ServerAdaptor::getSensorLabel(QString sensor)
+{
+    return m_server->getSensorLabel(sensor);
+}
+
 QString ServerAdaptor::getCPUName()
 {
     return m_server->getCPUName();
@@ -116,6 +121,17 @@ double Server::readSensor(QString sensor)
     }
 
     return 0.0;
+}
+
+QString Server::getSensorLabel(QString sensor)
+{
+    string path = sensor.toStdString();
+
+    if (nodes.find(path) != nodes.end()) {
+        return QString::fromStdString(nodes[path]->label);
+    }
+
+    return QString("");
 }
 
 QString Server::getCPUName()

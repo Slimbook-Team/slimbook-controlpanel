@@ -69,21 +69,32 @@ void FrequencySensor::update()
 HwmonTempSensor::HwmonTempSensor(): Sensor("hwmon.temp")
 {
     const std::filesystem::path base{"/sys/class/hwmon"};
+    const std::regex hwmon_regex("hwmon[0-9]+");
     const std::regex temp_regex("temp[0-9]+_input");
 
     for (auto const& dir : std::filesystem::directory_iterator{base}) {
         if (dir.is_directory()) {
             string parent = dir.path().filename();
-            if (parent.find("hwmon") == 0) {
+            if (std::regex_match(parent,hwmon_regex)) {
 
-                //std::string nodename;
-                //read_device(dir / std::filesystem::path("name"),nodename);
+                std::string nodename;
+                read_device(dir / std::filesystem::path("name"),nodename);
 
                 for (auto const& file : std::filesystem::directory_iterator{dir}) {
                     string filename = file.path().filename();
                     if (std::regex_match(filename, temp_regex)) {
                         Node child = Node(parent + "/" + filename);
-                        //child.label = nodename + "." + filename;
+                        
+                        std::filesystem::path label_node = std::regex_replace(filename,std::regex("_input"),"_label");
+                        
+                        if (std::filesystem::exists(dir/label_node)) {
+                            string tmp;
+                            read_device(dir/label_node,tmp);
+                            child.label = nodename + "." + tmp;
+                        }
+                        else {
+                            child.label = nodename + "." + filename;
+                        }
                         children.push_back(child);
                     }
 
@@ -110,21 +121,32 @@ void HwmonTempSensor::update()
 HwmonVoltageSensor::HwmonVoltageSensor():Sensor("hwmon.voltage")
 {
     const std::filesystem::path base{"/sys/class/hwmon"};
+    const std::regex hwmon_regex("hwmon[0-9]+");
     const std::regex temp_regex("in[0-9]+_input");
 
     for (auto const& dir : std::filesystem::directory_iterator{base}) {
         if (dir.is_directory()) {
             string parent = dir.path().filename();
-            if (parent.find("hwmon") == 0) {
+            if (std::regex_match(parent,hwmon_regex)) {
 
-                //std::string nodename;
-                //read_device(dir / std::filesystem::path("name"),nodename);
+                std::string nodename;
+                read_device(dir / std::filesystem::path("name"),nodename);
 
                 for (auto const& file : std::filesystem::directory_iterator{dir}) {
                     string filename = file.path().filename();
                     if (std::regex_match(filename, temp_regex)) {
                         Node child = Node(parent + "/" + filename);
-
+                        
+                        std::filesystem::path label_node = std::regex_replace(filename,std::regex("_input"),"_label");
+                        
+                        if (std::filesystem::exists(dir/label_node)) {
+                            string tmp;
+                            read_device(dir/label_node,tmp);
+                            child.label = nodename + "." + tmp;
+                        }
+                        else {
+                            child.label = nodename + "." + filename;
+                        }
                         children.push_back(child);
                     }
 
@@ -151,21 +173,33 @@ void HwmonVoltageSensor::update()
 HwmonPowerSensor::HwmonPowerSensor():Sensor("hwmon.power")
 {
     const std::filesystem::path base{"/sys/class/hwmon"};
+    const std::regex hwmon_regex("hwmon[0-9]+");
     const std::regex temp_regex("power[0-9]+_input");
 
     for (auto const& dir : std::filesystem::directory_iterator{base}) {
         if (dir.is_directory()) {
             string parent = dir.path().filename();
-            if (parent.find("hwmon") == 0) {
+            if (std::regex_match(parent,hwmon_regex)) {
 
-                //std::string nodename;
-                //read_device(dir / std::filesystem::path("name"),nodename);
+                std::string nodename;
+                read_device(dir / std::filesystem::path("name"),nodename);
 
                 for (auto const& file : std::filesystem::directory_iterator{dir}) {
                     string filename = file.path().filename();
                     if (std::regex_match(filename, temp_regex)) {
                         Node child = Node(parent + "/" + filename);
-                        //child.label = nodename + "." + filename;
+                        
+                        std::filesystem::path label_node = std::regex_replace(filename,std::regex("_input"),"_label");
+                        
+                        if (std::filesystem::exists(dir/label_node)) {
+                            string tmp;
+                            read_device(dir/label_node,tmp);
+                            child.label = nodename + "." + tmp;
+                        }
+                        else {
+                            child.label = nodename + "." + filename;
+                        }
+                        
                         children.push_back(child);
                     }
 
@@ -192,21 +226,33 @@ void HwmonPowerSensor::update()
 HwmonFanSensor::HwmonFanSensor():Sensor("hwmon.fan")
 {
     const std::filesystem::path base{"/sys/class/hwmon"};
+    const std::regex hwmon_regex("hwmon[0-9]+");
     const std::regex temp_regex("fan[0-9]+_input");
 
     for (auto const& dir : std::filesystem::directory_iterator{base}) {
         if (dir.is_directory()) {
             string parent = dir.path().filename();
-            if (parent.find("hwmon") == 0) {
+            if (std::regex_match(parent,hwmon_regex)) {
 
-                //std::string nodename;
-                //read_device(dir / std::filesystem::path("name"),nodename);
+                std::string nodename;
+                read_device(dir / std::filesystem::path("name"),nodename);
 
                 for (auto const& file : std::filesystem::directory_iterator{dir}) {
                     string filename = file.path().filename();
                     if (std::regex_match(filename, temp_regex)) {
                         Node child = Node(parent + "/" + filename);
-                        //child.label = nodename + "." + filename;
+                        
+                        std::filesystem::path label_node = std::regex_replace(filename,std::regex("_input"),"_label");
+                        
+                        if (std::filesystem::exists(dir/label_node)) {
+                            string tmp;
+                            read_device(dir/label_node,tmp);
+                            child.label = nodename + "." + tmp;
+                        }
+                        else {
+                            child.label = nodename + "." + filename;
+                        }
+                        
                         children.push_back(child);
                     }
 
@@ -363,6 +409,7 @@ void RamSensor::update()
     int total;
     int free;
     read_meminfo(total,free);
+    //clog<<"meminfo "<<total<<" "<<free<<endl;
 
     for (Node& node:children) {
         if (node.name == "total") {

@@ -36,6 +36,8 @@ namespace slimbook
             void updateSensors();
 
             double readSensor(QString sensor);
+            
+            QString getSensorLabel(QString sensor);
 
             QString getCPUName();
 
@@ -68,6 +70,8 @@ namespace slimbook
             void updateSensors();
 
             double readSensor(QString sensor);
+            
+            QString getSensorLabel(QString sensor);
 
             QString getCPUName();
 
