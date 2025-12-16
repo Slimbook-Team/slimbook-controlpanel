@@ -125,6 +125,12 @@ QQC2.Pane {
                         continue;
                     }
 
+
+                    if (config[n].logo !== undefined) {
+                        logo.source = config[n].logo;
+                        console.log("logo ",config[n].logo);
+                    }
+
                     for (var i=0;i<config[n].layout.length;i++) {
                         var item = config[n].layout[i];
 
@@ -212,12 +218,14 @@ QQC2.Pane {
             ColumnLayout {
                 anchors.fill:parent
 
-                QQC2.Label {
-                    Layout.alignment: Qt.AlignHCenter
-                    height: 64
+                Image {
+                    id: logo
+                    height: 128
+                    fillMode: Image.PreserveAspectFit
 
-                    text: bridge.vendor + "/" + bridge.product
+                    Layout.alignment: Qt.AlignHCenter
                 }
+
                 
                 GridLayout {
                     id: container
@@ -225,6 +233,13 @@ QQC2.Pane {
                     rows: 4
                     Layout.alignment: Qt.AlignHCenter
                     
+                }
+
+                QQC2.Label {
+                    Layout.alignment: Qt.AlignHCenter
+                    height: 24
+
+                    text: bridge.vendor + "/" + bridge.product
                 }
                 
             }

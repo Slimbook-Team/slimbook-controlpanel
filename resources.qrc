@@ -19,5 +19,7 @@
     <file>images/menu-dashboard.svg</file>
     <file>images/menu-raw.svg</file>
     <file>images/cpu-slot.svg</file>
+    <file>images/models/kymera.png</file>
+    <file>images/models/evo.png</file>
 </qresource>
 </RCC>
