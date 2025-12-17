@@ -16,7 +16,11 @@
                 "row" : 1,
                 "sensor": "rapl.intel-rapl:0",
                 "label" : "Power",
-                "unit" : "W"
+                "unit" : "W",
+                "warning": 55,
+                "critical" : 80,
+                "minimum": 0.0,
+                "maximum": 88.0
             },
             {
                 "type" : "MultiValue",
@@ -42,9 +46,11 @@
                 "type" : "Value",
                 "col" : 0,
                 "row" : 2,
-                "sensor": "ram.free",
-                "label" : "Ram free",
-                "unit" : "GB"
+                "sensor": "ram.usage",
+                "label" : "Ram",
+                "unit" : "%",
+                "minimum" : 0.0,
+                "maximum" : 100.0
             },
             {
                 "type" : "CpuInfo",

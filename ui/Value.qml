@@ -8,13 +8,14 @@ import QtQuick
 import QtQuick.Layouts
 
 SensorSlot {
+    id: root
     objectName: "Value"
     property string label: ""
     property string unit: ""
-    property double warning: 100000.0
-    property double critical: 100000.0
-    property double minimum: -100000.0
-    property double maximum: 100000.0
+    property double warning: Infinity
+    property double critical: Infinity
+    property double minimum: -Infinity
+    property double maximum: Infinity
 
     width: 128
     height: 128
@@ -47,6 +48,9 @@ SensorSlot {
 
             Graph {
                 id: graph
+                maximum: root.maximum
+                minimum: root.minimum
+
                 Layout.fillWidth: true
                 Layout.minimumHeight: 32
                 Layout.leftMargin: 4

@@ -10,10 +10,11 @@ import QtQuick.Layouts
 Canvas {
     id: root
     
+    property double minimum: -Infinity
+    property double maximum: Infinity
+
     property int points: 32
     property var data: ([])
-    property double pmin: 0.0
-    property double pmax: 0.0
     
     function push(value) {
         data.push(value);
@@ -34,14 +35,22 @@ Canvas {
     onPaint: {
         var ctx = getContext("2d");
         ctx.clearRect(0,0,width,height);
-        
-        for (var n=0;n < points;n++) {
-            if (data[n] > pmax) {
-                pmax = data[n];
-            }
-            
-            if (data[n] < pmin) {
-                pmin = data[n];
+        var pmin = 0.0;
+        var pmax = 0.0;
+
+        if (minimum !== -Infinity && maximum !== Infinity) {
+            pmin = minimum;
+            pmax = maximum;
+        }
+        else {
+            for (var n=0;n < points;n++) {
+                if (data[n] > pmax) {
+                    pmax = data[n];
+                }
+
+                if (data[n] < pmin) {
+                    pmin = data[n];
+                }
             }
         }
         
@@ -73,7 +82,7 @@ Canvas {
             
             if (value > 1.0) {
                 value = 1.0;
-                saturarion = true;
+                saturation = true;
             }
             
             ctx.fillRect(pos-(pw/2),height-(value*height),pw,height);

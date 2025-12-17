@@ -21,13 +21,13 @@ QQC2.Pane {
         ListElement {
             name: "Dashboard"
             index: 0
-            iconName: "../images/menu-dashboard.svg"
+            iconName: "qrc:/images/menu-dashboard.svg"
         }
         
         ListElement {
             name: "Data"
             index: 1
-            iconName: "../images/menu-raw.svg"
+            iconName: "qrc:/images/menu-raw.svg"
         }
         
     }
@@ -136,13 +136,9 @@ QQC2.Pane {
 
                         if (item.type == "Value") {
                             var component = Qt.createComponent("Value.qml");
-                            var o = component.createObject(container,{
-                                    sensor:item.sensor,
-                                    label:item.label,
-                                    unit:item.unit,
-                                    warning: (item.warning === undefined) ? 100000.0 : item.warning,
-                                    critical: (item.critical === undefined) ? 100000.0 : item.critical,
-                            });
+
+                            delete item.type;
+                            var o = component.createObject(container,item);
 
                             o.Layout.row = item.row;
                             o.Layout.column = item.col;
@@ -150,15 +146,9 @@ QQC2.Pane {
 
                         if (item.type == "MultiValue") {
                             var component = Qt.createComponent("MultiValue.qml");
-                            var o = component.createObject(container,{
-                                sensor:item.sensor,
-                                label:item.label,
-                                unit:item.unit,
-                                minimum: item.minimum,
-                                maximum: item.maximum,
-                                warning: (item.warning === undefined) ? 100000.0 : item.warning,
-                                                           critical: (item.critical === undefined) ? 100000.0 : item.critical,
-                            });
+
+                            delete item.type;
+                            var o = component.createObject(container,item);
 
                             o.Layout.row = item.row;
                             o.Layout.column = item.col;
@@ -237,7 +227,8 @@ QQC2.Pane {
 
                 QQC2.Label {
                     Layout.alignment: Qt.AlignHCenter
-                    height: 24
+                    height: 16
+                    color: UI.Palette.base
 
                     text: bridge.vendor + "/" + bridge.product
                 }
@@ -322,6 +313,4 @@ QQC2.Pane {
         }
     }
 }
-
-
 
