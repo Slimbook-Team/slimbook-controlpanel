@@ -166,5 +166,108 @@
             }
             
         ]
+    },
+    {
+        "name" : "Executive UC2",
+        "match" : {
+            "type" : "model",
+            "model" : 260
+        },
+        "logo":"qrc:/images/models/evo.png",
+        "layout" : [
+            {
+                "type" : "SlimbookProfile",
+                "col" : 0,
+                "row" : 0
+            },
+            {
+                "type" : "SystemProfile",
+                "col" : 1,
+                "row" : 0
+            },
+            {
+                "type" : "Value",
+                "col" : 2,
+                "row" : 0,
+                "sensor": "rapl.intel-rapl:0",
+                "label" : "Power",
+                "unit" : "W"
+            },
+            {
+                "type" : "MultiValue",
+                "col" : 0,
+                "row" : 1,
+                "sensor": "cpu.load.cpu[0-9]+",
+                "label" : "Load",
+                "unit" : "%",
+                "warning": 90,
+                "critical" : 99,
+                "minimum" : 0,
+                "maximum" : 100
+            },
+            {
+                "type" : "MultiValue",
+                "col" : 2,
+                "row" : 2,
+                "sensor": "cpu.freq.cpu[0-9]+",
+                "label" : "Frequency",
+                "unit" : "Mhz",
+                "minimum" : 600,
+                "maximum" : 5100
+            },
+            {
+                "type" : "Value",
+                "col" : 1,
+                "row" : 1,
+                "sensor": "ram.usage",
+                "label" : "RAM",
+                "unit" : "G"
+            },
+            {
+                "type" : "Value",
+                "col" : 2,
+                "row" : 1,
+                "sensor": "battery.BAT0/capacity",
+                "label" : "Battery",
+                "unit" : "%"
+            },
+            {
+                "type" : "CpuInfo",
+                "col" : 0,
+                "row" : 2
+            },
+            {
+                "type" : "TDP",
+                "col" : 1,
+                "row" : 2
+            },
+            {
+                "type" : "Value",
+                "col" : 0,
+                "row" : 3,
+                "sensor": "hwmon.fan.hwmon8/fan1_input",
+                "label" : "Fan 0",
+                "unit" : ""
+            },
+            {
+                "type" : "Value",
+                "col" : 1,
+                "row" : 3,
+                "sensor": "hwmon.fan.hwmon8/fan2_input",
+                "label" : "Fan 1",
+                "unit" : ""
+            },
+            {
+                "type" : "Value",
+                "col" : 2,
+                "row" : 3,
+                "sensor": "hwmon.temp.hwmon2/temp1_input",
+                "label" : "Temp",
+                "unit" : "",
+                "warning": 45,
+                "critical": 60
+            }
+            
+        ]
     }
 ]

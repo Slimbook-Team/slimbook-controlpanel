@@ -240,6 +240,16 @@ HwmonFanSensor::HwmonFanSensor():Sensor("hwmon.fan")
                 for (auto const& file : std::filesystem::directory_iterator{dir}) {
                     string filename = file.path().filename();
                     if (std::regex_match(filename, temp_regex)) {
+                    
+                        try {
+                            double sink;
+                            read_device("/sys/class/hwmon/" + parent + "/" + filename, sink);
+                        }
+                        catch (std::exception & e) {
+                            clog<<"ignoring device "<<filename<<endl;
+                            continue;
+                        }
+                        
                         Node child = Node(parent + "/" + filename);
                         
                         std::filesystem::path label_node = std::regex_replace(filename,std::regex("_input"),"_label");

@@ -169,38 +169,43 @@ QVariantList Server::getTDP()
 
     stringstream out;
     
-    int status = get_process_output("ryzenadj", {"--dump-table"}, out);
+    if (m_cpuName.contains("Intel")) {
+        tdp<<200.0<<200<<200; //hack
+    }
+    
+    if (m_cpuName.contains("AMD")) {
+        int status = get_process_output("ryzenadj", {"--dump-table"}, out);
 
-    if (status == 0) {
-        int n = -1;
-        
-        while (!out.eof()) {
-            string line;
+        if (status == 0) {
+            int n = -1;
             
-            std::getline(out,line);
-            
-            n++;
-            
-            if (n < 3) {
-                continue;
-            }
-            vector<string> tmp = split(line,'|');
-            
-            if (tmp.size() > 2) {
-                string raw_offset = trim(tmp[0]);
-                string raw_value = trim(tmp[2]);
+            while (!out.eof()) {
+                string line;
                 
-                uint32_t offset = std::stoi(raw_offset,0,16);
-                double value = std::stof(raw_value);
+                std::getline(out,line);
                 
-                if (offset == 0x0000 or offset == 0x0008 or offset == 0x0010) {
-                    tdp<<offset<<value;
+                n++;
+                
+                if (n < 3) {
+                    continue;
+                }
+                vector<string> tmp = split(line,'|');
+                
+                if (tmp.size() > 2) {
+                    string raw_offset = trim(tmp[0]);
+                    string raw_value = trim(tmp[2]);
+                    
+                    uint32_t offset = std::stoi(raw_offset,0,16);
+                    double value = std::stof(raw_value);
+                    
+                    if (offset == 0x0000 or offset == 0x0008 or offset == 0x0010) {
+                        tdp<<offset<<value;
+                    }
+                    
                 }
                 
             }
-            
         }
     }
-    
     return tdp;
 }
