@@ -2,18 +2,29 @@
     {
         "name" : "Aorus B550",
         "match" : {"type" : "dmi", "vendor" : "Gigabyte Technology Co., Ltd.", "product" : "B550 AORUS ELITE V2"},
-        "logo":"qrc:/images/models/kymera.png",
+        "logo":"qrc:/images/models/kymera.svg",
+        "columns" : 4,
+        "rows" : 4,
         "layout": [
-
+            {
+                "type" : "CpuInfo",
+                "col" : 0,
+                "row" : 0
+            },
             {
                 "type" : "SystemProfile",
+                "col" : 1,
+                "row" : 0
+            },
+            {
+                "type" : "TDP",
                 "col" : 2,
-                "row" : 1
+                "row" : 0
             },
             {
                 "type" : "Value",
-                "col" : 0,
-                "row" : 1,
+                "col" : 3,
+                "row" : 0,
                 "sensor": "rapl.intel-rapl:0",
                 "label" : "Power",
                 "unit" : "W",
@@ -22,6 +33,20 @@
                 "minimum": 0.0,
                 "maximum": 88.0
             },
+
+            {
+                "type" : "Value",
+                "col" : 0,
+                "row" : 1,
+                "sensor": "hwmon.temp.hwmon2/temp1_input",
+                "label" : "CPU Temp",
+                "unit" : "",
+                "warning": 50,
+                "critical" : 70,
+                "minimum": 0.0,
+                "maximum": 100.0
+            },
+
             {
                 "type" : "MultiValue",
                 "col" : 1,
@@ -35,13 +60,26 @@
                 "maximum" : 100
             },
             {
+                "type" : "MultiValue",
+                "col" : 2,
+                "row" : 1,
+                "sensor": "cpu.freq.cpu[0-9]+",
+                "label" : "Mhz",
+                "unit" : "%",
+                "warning": 4000,
+                "critical" : 4600,
+                "minimum" : 400,
+                "maximum" : 4673
+            },
+            {
                 "type" : "Value",
-                "col" : 1,
-                "row" : 2,
-                "sensor": "cpu.freq.average",
-                "label" : "Frequency",
+                "col" : 3,
+                "row" : 1,
+                "sensor": "cpu.load.average",
+                "label" : "Load",
                 "unit" : ""
             },
+
             {
                 "type" : "Value",
                 "col" : 0,
@@ -51,17 +89,9 @@
                 "unit" : "%",
                 "minimum" : 0.0,
                 "maximum" : 100.0
-            },
-            {
-                "type" : "CpuInfo",
-                "col" : 0,
-                "row" : 0
-            },
-            {
-                "type" : "TDP",
-                "col" : 2,
-                "row" : 2
             }
+
+
 
         ]
     },
@@ -71,6 +101,8 @@
             "type" : "family",
             "family" : "evo"
         },
+        "columns" : 4,
+        "rows" : 4,
         "layout" : [
             {
                 "type" : "SlimbookProfile",

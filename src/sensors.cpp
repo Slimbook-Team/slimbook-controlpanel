@@ -312,12 +312,15 @@ RaplSensor::RaplSensor():Sensor("rapl")
 void RaplSensor::update()
 {
     for (Node& node:children) {
-        double now;
-        read_device("/sys/class/powercap/"+node.name+"/energy_uj",now);
-        double watts = (now - node.raw) / 1000000.0d;
+        double current;
+        auto now = std::chrono::steady_clock::now();
+        double delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - node.timestamp).count() / 1000.0;
+
+        read_device("/sys/class/powercap/"+node.name+"/energy_uj", current);
+        double watts = (current - node.raw) / 1000000.0 / delta;
         node.value = watts;
-        node.timestamp = std::chrono::steady_clock::now();
-        node.raw = now;
+        node.timestamp = now;
+        node.raw = current;
     }
 }
 
@@ -403,10 +406,15 @@ void RamSensor::read_meminfo(int& total,int& free)
 
     file.open("/proc/meminfo");
 
+    // MemTotal
     std::getline(file, line);
     vector<string> tmp = split(line,' ');
     total = std::stoll(tmp[1]);
 
+    // MemFree
+    std::getline(file, line);
+
+    // MemAvailable
     std::getline(file, line);
     tmp = split(line,' ');
     free = std::stoll(tmp[1]);

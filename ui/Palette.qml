@@ -6,8 +6,8 @@ pragma Singleton
 import QtQuick
 
 QtObject {
-    readonly property string background: "#fefefe"
+    readonly property string background: "#babfd1"
     readonly property string base: "#0074a7"
-    readonly property string warning: "#ffe606"
-    readonly property string critical: "#a70000"
+    readonly property string warning: "#ffc759"
+    readonly property string critical: "#ff7b9c"
 }
