@@ -205,7 +205,7 @@
             "type" : "model",
             "model" : 260
         },
-        "logo":"qrc:/images/models/evo.png",
+        "logo":"qrc:/images/models/executive.svg",
         "layout" : [
             {
                 "type" : "SlimbookProfile",

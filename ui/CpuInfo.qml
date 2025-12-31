@@ -40,8 +40,9 @@ Item {
             anchors.fill:parent
 
             Text {
+                anchors.margins: 2
                 Layout.alignment: Qt.AlignHCenter
-                font.pixelSize: 14
+                font.pixelSize: 12
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 Layout.maximumWidth: 120
