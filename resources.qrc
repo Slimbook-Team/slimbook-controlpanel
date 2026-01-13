@@ -21,6 +21,12 @@
     <file>images/cpu-slot.svg</file>
     <file>images/models/kymera.svg</file>
     <file>images/models/executive.svg</file>
-    <file>images/models/evo.png</file>
+    <file>images/models/evo.svg</file>
+    <file>images/models/creative.svg</file>
+    <file>images/models/excalibur.svg</file>
+    <file>images/models/elemental.svg</file>
+    <file>images/models/zero.svg</file>
+    <file>images/models/one.svg</file>
+    <file>images/models/nas.svg</file>
 </qresource>
 </RCC>

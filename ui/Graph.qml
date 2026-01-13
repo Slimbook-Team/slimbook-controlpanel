@@ -34,6 +34,8 @@ Canvas {
     
     onPaint: {
         var ctx = getContext("2d");
+        var dynamicRange = true;
+
         ctx.clearRect(0,0,width,height);
         var pmin = 0.0;
         var pmax = 0.0;
@@ -41,6 +43,8 @@ Canvas {
         if (minimum !== -Infinity && maximum !== Infinity) {
             pmin = minimum;
             pmax = maximum;
+
+            dynamicRange = false;
         }
         else {
             for (var n=0;n < points;n++) {
@@ -58,31 +62,37 @@ Canvas {
         var pos = 0;
         var range = pmax - pmin;
         
-        var saturation = false;
-        
         for (var n=0;n<points;n++) {
             var raw = data[n];
             var value = raw/range;
             
-            if (raw < warning) {
-                ctx.fillStyle = UI.Palette.base;
-            }
-            else {
-                if (raw < critical) {
-                    ctx.fillStyle = UI.Palette.warning;
-                }
-                else {
-                    ctx.fillStyle = UI.Palette.critical;
-                }
-            }
-            
             if (value < 0) {
                 value = 0;
             }
-            
+
+            ctx.fillStyle = UI.Palette.base;
+
+            if (value >= 0.99) {
+
+                if (dynamicRange == false) {
+                    ctx.fillStyle = UI.Palette.maximum;
+                }
+            }
+
             if (value > 1.0) {
                 value = 1.0;
-                saturation = true;
+
+                if (dynamicRange == false) {
+                    ctx.fillStyle = UI.Palette.saturation;
+                }
+            }
+
+            if (raw > warning) {
+                ctx.fillStyle = UI.Palette.warning;
+            }
+
+            if (raw > critical) {
+                ctx.fillStyle = UI.Palette.critical;
             }
             
             ctx.fillRect(pos-(pw/2),height-(value*height),pw,height);
@@ -92,14 +102,10 @@ Canvas {
         
         ctx.strokeStyle = UI.Palette.base;
         ctx.beginPath();
-        if (saturation) {
-            ctx.strokeStyle = UI.Palette.critical;
-        }
         
         ctx.moveTo(0,0);
         ctx.lineTo(width,0);
         
-        ctx.strokeStyle = UI.Palette.base;
         ctx.moveTo(0,height);
         ctx.lineTo(width,height);
         
@@ -109,32 +115,6 @@ Canvas {
         ctx.closePath();
         ctx.stroke();
         
-        /*
-        ctx.strokeStyle = UI.Palette.base;
-        ctx.strokeRect(0,0,width,height);
-        
-        var value = data[0]/range;
-        
-        ctx.beginPath();
-        ctx.moveTo(pos,height - (value * height));
-        pos = pos + pw;
-        
-        for (var n=1;n < points; n++) {
-            var value = data[n]/range;
-            
-            ctx.lineTo(pos,height - (value * height));
-            
-            //ctx.moveTo(pos,0);
-            //ctx.lineTo(pos,height);
-            
-            ctx.moveTo(pos,height - (value * height));
-            pos = pos + pw;
-        }
-        
-        ctx.closePath();
-        ctx.stroke();
-        
-        */
     }
 
 }

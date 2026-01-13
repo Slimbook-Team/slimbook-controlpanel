@@ -8,6 +8,9 @@ import QtQuick
 QtObject {
     readonly property string background: "#babfd1"
     readonly property string base: "#0074a7"
-    readonly property string warning: "#ffc759"
-    readonly property string critical: "#ff7b9c"
+    readonly property string warning: "#ffa500"
+    readonly property string critical: "#d32f2f"
+    readonly property string maximum: "#8e44ad"
+    readonly property string saturation: "#b07fcf"
+
 }

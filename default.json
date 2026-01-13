@@ -54,8 +54,6 @@
                 "sensor": "cpu.load.cpu[0-9]+",
                 "label" : "Load",
                 "unit" : "%",
-                "warning": 20,
-                "critical" : 90,
                 "minimum" : 0,
                 "maximum" : 100
             },
@@ -66,8 +64,6 @@
                 "sensor": "cpu.freq.cpu[0-9]+",
                 "label" : "Mhz",
                 "unit" : "%",
-                "warning": 4000,
-                "critical" : 4600,
                 "minimum" : 400,
                 "maximum" : 4673
             },
@@ -90,8 +86,6 @@
                 "minimum" : 0.0,
                 "maximum" : 100.0
             }
-
-
 
         ]
     },

@@ -86,24 +86,25 @@ Item {
                             value = 0;
                         }
                         
+                        ctx.fillStyle = UI.Palette.base;
+
+                        if (value > 0.99) {
+                            ctx.fillStyle = UI.Palette.maximum;
+                        }
+
                         if (value > 1.0) {
                             value = 1.0;
+                            ctx.fillStyle = UI.Palette.saturation;
                         }
-                        
-                        if (raw < warning) {
-                            ctx.fillStyle = UI.Palette.base;
-                        }
-                        else {
-                            if (raw < critical) {
-                                ctx.fillStyle = UI.Palette.warning;
-                            }
-                            else {
-                                ctx.fillStyle = UI.Palette.critical;
-                            }
-                        }
-                        
-                        //console.log("mv ",src," ",value);
 
+                        if (raw > warning) {
+                            ctx.fillStyle = UI.Palette.warning;
+                        }
+
+                        if (raw > critical) {
+                            ctx.fillStyle = UI.Palette.critical;
+                        }
+                        
                         ctx.fillRect(xpos, height - (value*height), blockWidth, height);
 
                         xpos = xpos + blockWidth;
