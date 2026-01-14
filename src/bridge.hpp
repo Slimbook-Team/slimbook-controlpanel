@@ -9,6 +9,7 @@
 #include <QStringList>
 #include <QDBusConnection>
 #include <QDBusInterface>
+#include <QVariant>
 
 #include <vector>
 #include <map>
@@ -41,6 +42,10 @@ namespace slimbook
             QString m_slimbookFamily;
 
             Bridge(QObject *parent = nullptr);
+
+            Q_INVOKABLE QVariant loadConfig();
+            Q_INVOKABLE void saveConfig(QVariant config);
+            Q_INVOKABLE QVariant loadDefaults();
 
             Q_INVOKABLE void updateSensors();
             Q_INVOKABLE double readSensor(QString sensor);

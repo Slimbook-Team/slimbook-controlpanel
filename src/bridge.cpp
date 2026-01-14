@@ -12,6 +12,9 @@
 #include <QDBusReply>
 #include <QList>
 #include <QVariant>
+#include <QJsonDocument>
+#include <QFile>
+#include <QDir>
 #include <QDebug>
 
 #include <iostream>
@@ -70,6 +73,38 @@ Bridge::Bridge(QObject *parent): QObject{parent}
 
     }
 
+}
+
+QVariant Bridge::loadConfig()
+{
+    QFile configFile;
+
+    configFile.setFileName(QDir::home().path()+".config/slimbook-controlpanel.json");
+
+    if (!configFile.exists()) {
+        return QVariant();
+    }
+
+    QJsonDocument config = QJsonDocument::fromJson(configFile.readAll());
+
+    return config.toVariant();
+}
+
+void Bridge::saveConfig(QVariant config)
+{
+    //TODO
+}
+
+QVariant Bridge::loadDefaults()
+{
+    QFile configFile;
+
+    configFile.setFileName(":/default.json");
+    configFile.open(QIODevice::ReadOnly);
+
+    QJsonDocument config = QJsonDocument::fromJson(configFile.readAll());
+
+    return config.toVariant();
 }
 
 void Bridge::updateSensors()
