@@ -14,6 +14,8 @@ QQC2.Pane {
     id: main
     width: 640
     height: 640
+
+    property var config: undefined
     
     ListModel {
         id: winlist
@@ -74,9 +76,6 @@ QQC2.Pane {
         
         QQC2.Pane {
             id: dashboard
-            //width: 128 * 5
-            //height: 128 * 5
-            //visible: false
 
             Component.onCompleted: {
                 console.log("Available sensors:");
@@ -89,103 +88,116 @@ QQC2.Pane {
                 console.log(bridge.slimbookModel);
                 console.log(bridge.slimbookFamily);
 
-                for (var n=0;n<config.length;n++) {
+                main.config = bridge.loadConfig();
 
-                    var match = false;
+                if (main.config === undefined) {
+                    var config = bridge.loadDefaults();
 
-                    switch (config[n].match.type) {
-                        case "dmi":
-                            var dmivendor = config[n].match.vendor;
-                            var dmiproduct = config[n].match.product;
-                            if (dmivendor.match(bridge.vendor) && dmiproduct.match(bridge.product)) {
-                                match = true;
-                            }
+                    for (var n=0;n<config.length;n++) {
+
+                        var match = false;
+
+                        switch (config[n].match.mode) {
+                            case "dmi":
+                                var dmivendor = config[n].match.vendor;
+                                var dmiproduct = config[n].match.product;
+                                if (dmivendor.match(bridge.vendor) && dmiproduct.match(bridge.product)) {
+                                    match = true;
+                                }
+                            break;
+
+                            case "family":
+                                var family = config[n].match.family;
+
+                                if (family.match(bridge.slimbookFamily)) {
+                                    match = true;
+                                }
+                            break;
+
+                            case "model":
+                                var model = config[n].match.model;
+
+                                if (model == bridge.slimbookModel) {
+                                    match = true;
+                                }
+                            break;
+                        }
+
+                        console.log("* ",config[n].name," match:",match);
+
+                        if (match == false) {
+                            continue;
+                        }
+
+                        main.config = Object.assign({}, config[n]);
+
+                        console.log("creating default config");
+                        console.log(main.config);
+                        bridge.saveConfig(config[n]);
                         break;
 
-                        case "family":
-                            var family = config[n].match.family;
-
-                            if (family.match(bridge.slimbookFamily)) {
-                                match = true;
-                            }
-                        break;
-
-                        case "model":
-                            var model = config[n].match.model;
-
-                            if (model == bridge.slimbookModel) {
-                                match = true;
-                            }
-                        break;
                     }
 
-                    console.log("* ",config[n].name," match:",match);
+                }
 
-                    if (match == false) {
-                        continue;
+                if (main.config.logo !== undefined) {
+                    logo.source = main.config.logo;
+                    console.log("logo ",main.config.logo);
+                }
+
+                for (var i=0;i<main.config.layout.length;i++) {
+                    var item = main.config.layout[i];
+
+                    if (item.widget == "Value") {
+                        var component = Qt.createComponent("Value.qml");
+
+                        delete item.type;
+                        var o = component.createObject(container,item);
+
+                        o.Layout.row = item.row;
+                        o.Layout.column = item.col;
                     }
 
+                    if (item.widget == "MultiValue") {
+                        var component = Qt.createComponent("MultiValue.qml");
 
-                    if (config[n].logo !== undefined) {
-                        logo.source = config[n].logo;
-                        console.log("logo ",config[n].logo);
+                        delete item.type;
+                        var o = component.createObject(container,item);
+
+                        o.Layout.row = item.row;
+                        o.Layout.column = item.col;
                     }
 
-                    for (var i=0;i<config[n].layout.length;i++) {
-                        var item = config[n].layout[i];
+                    if (item.widget == "SystemProfile") {
+                        var component = Qt.createComponent("SystemProfile.qml");
+                        var o = component.createObject(container,{});
 
-                        if (item.type == "Value") {
-                            var component = Qt.createComponent("Value.qml");
+                        o.Layout.row = item.row;
+                        o.Layout.column = item.col;
+                    }
 
-                            delete item.type;
-                            var o = component.createObject(container,item);
+                    if (item.widget == "CpuInfo") {
+                        var component = Qt.createComponent("CpuInfo.qml");
+                        var o = component.createObject(container,{});
 
-                            o.Layout.row = item.row;
-                            o.Layout.column = item.col;
-                        }
+                        o.Layout.row = item.row;
+                        o.Layout.column = item.col;
+                    }
 
-                        if (item.type == "MultiValue") {
-                            var component = Qt.createComponent("MultiValue.qml");
+                    if (item.widget == "SlimbookProfile") {
+                        var component = Qt.createComponent("SlimbookProfile.qml");
+                        var o = component.createObject(container,{});
 
-                            delete item.type;
-                            var o = component.createObject(container,item);
+                        o.Layout.row = item.row;
+                        o.Layout.column = item.col;
+                    }
 
-                            o.Layout.row = item.row;
-                            o.Layout.column = item.col;
-                        }
+                    if (item.widget == "TDP") {
+                        var component = Qt.createComponent("TDP.qml");
+                        var o = component.createObject(container,{});
 
-                        if (item.type == "SystemProfile") {
-                            var component = Qt.createComponent("SystemProfile.qml");
-                            var o = component.createObject(container,{});
-
-                            o.Layout.row = item.row;
-                            o.Layout.column = item.col;
-                        }
-
-                        if (item.type == "CpuInfo") {
-                            var component = Qt.createComponent("CpuInfo.qml");
-                            var o = component.createObject(container,{});
-
-                            o.Layout.row = item.row;
-                            o.Layout.column = item.col;
-                        }
-
-                        if (item.type == "SlimbookProfile") {
-                            var component = Qt.createComponent("SlimbookProfile.qml");
-                            var o = component.createObject(container,{});
-
-                            o.Layout.row = item.row;
-                            o.Layout.column = item.col;
-                        }
-                        
-                        if (item.type == "TDP") {
-                            var component = Qt.createComponent("TDP.qml");
-                            var o = component.createObject(container,{});
-
-                            o.Layout.row = item.row;
-                            o.Layout.column = item.col;
-                        }
-
+                        o.Layout.row = item.row;
+                        o.Layout.column = item.col;
                     }
 
                 }

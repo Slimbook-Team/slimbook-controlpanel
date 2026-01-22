@@ -79,7 +79,8 @@ QVariant Bridge::loadConfig()
 {
     QFile configFile;
 
-    configFile.setFileName(QDir::home().path()+".config/slimbook-controlpanel.json");
+    configFile.setFileName(QDir::home().path()+"/.config/slimbook/controlpanel.json");
+    configFile.open(QIODevice::ReadOnly);
 
     if (!configFile.exists()) {
         return QVariant();
@@ -90,9 +91,21 @@ QVariant Bridge::loadConfig()
     return config.toVariant();
 }
 
-void Bridge::saveConfig(QVariant config)
+void Bridge::saveConfig(QJSValue config)
 {
-    //TODO
+    //qDebug()<<config;
+
+    QFile configFile;
+    QDir dir;
+
+    dir.mkpath(QDir::home().path()+"/.config/slimbook");
+
+    configFile.setFileName(QDir::home().path()+"/.config/slimbook/controlpanel.json");
+    configFile.open(QIODevice::WriteOnly);
+
+    QJsonDocument doc = QJsonDocument::fromVariant(config.toVariant());
+
+    configFile.write(doc.toJson());
 }
 
 QVariant Bridge::loadDefaults()

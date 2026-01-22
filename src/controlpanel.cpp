@@ -10,7 +10,6 @@
 #include <QQmlContext>
 #include <QQuickItem>
 #include <QVariant>
-#include <QJsonDocument>
 #include <QFile>
 #include <QDebug>
 
@@ -35,19 +34,10 @@ int main(int argc,char*argv[])
 
     Bridge* bridge = new Bridge();
 
-    QFile configFile;
-
-    configFile.setFileName(":/default.json");
-    configFile.open(QIODevice::ReadOnly);
-
-    QJsonDocument config =QJsonDocument::fromJson(configFile.readAll());
-    qDebug()<<config;
-
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
     QQmlContext* ctxt = view.rootContext();
-    ctxt->setContextProperty(QStringLiteral("config"), config.toVariant());
     ctxt->setContextProperty(QStringLiteral("bridge"), bridge);
 
     view.setSource(QUrl("qrc:/ui/main.qml"));

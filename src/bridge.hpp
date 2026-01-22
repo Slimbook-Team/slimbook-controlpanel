@@ -10,6 +10,7 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QVariant>
+#include <QJSValue>
 
 #include <vector>
 #include <map>
@@ -44,7 +45,7 @@ namespace slimbook
             Bridge(QObject *parent = nullptr);
 
             Q_INVOKABLE QVariant loadConfig();
-            Q_INVOKABLE void saveConfig(QVariant config);
+            Q_INVOKABLE void saveConfig(QJSValue config);
             Q_INVOKABLE QVariant loadDefaults();
 
             Q_INVOKABLE void updateSensors();
