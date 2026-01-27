@@ -13,7 +13,7 @@ import Qt.labs.qmlmodels
 QQC2.Pane {
     id: main
     width: 640
-    height: 640
+    height: 700
 
     property var config: undefined
     
@@ -27,8 +27,14 @@ QQC2.Pane {
         }
         
         ListElement {
-            name: "Data"
+            name: "Settings"
             index: 1
+            iconName: "qrc:/images/menu-settings.svg"
+        }
+        
+        ListElement {
+            name: "Data"
+            index: 2
             iconName: "qrc:/images/menu-raw.svg"
         }
         
@@ -71,7 +77,7 @@ QQC2.Pane {
         interactive: false
         
         onCurrentIndexChanged: {
-            console.log(currentIndex);
+            //console.log(currentIndex);
         }
         
         QQC2.Pane {
@@ -151,7 +157,7 @@ QQC2.Pane {
                     if (item.widget == "Value") {
                         var component = Qt.createComponent("Value.qml");
 
-                        delete item.type;
+                        delete item.widget;
                         var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
@@ -161,7 +167,7 @@ QQC2.Pane {
                     if (item.widget == "MultiValue") {
                         var component = Qt.createComponent("MultiValue.qml");
 
-                        delete item.type;
+                        delete item.widget;
                         var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
@@ -246,6 +252,10 @@ QQC2.Pane {
                 }
                 
             }
+        }
+        
+        QQC2.Pane {
+            id: settings
         }
         
         QQC2.Pane {
