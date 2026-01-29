@@ -256,6 +256,74 @@ QQC2.Pane {
         
         QQC2.Pane {
             id: settings
+            property bool changes: false
+
+            ColumnLayout {
+                anchors.fill: parent
+
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    QQC2.Label {
+                        Layout.alignment: Qt.AlignRight
+                        text: "Sensor update time (seconds):"
+                    }
+
+                    QQC2.TextField {
+                        id: cfgSampleRate
+
+                        Layout.alignment: Qt.AlignRight
+                        property string last : main.config["sample-rate"]
+
+                        text: main.config["sample-rate"]
+                        validator: DoubleValidator {
+                            top: 30.000
+                            bottom: 0.100
+                            decimals: 3
+                            notation: DoubleValidator.StandardNotation
+                        }
+
+                        horizontalAlignment : TextInput.AlignHCenter
+
+                        Layout.preferredWidth: 64
+
+                        onEditingFinished: {
+                            if (acceptableInput) {
+                                settings.changes = true;
+                                last = text;
+                            }
+
+                        }
+
+                        onAcceptableInputChanged: {
+                            color = acceptableInput ? "black" : "red";
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                }
+
+                RowLayout {
+                    Layout.alignment: Qt.AlignBottom
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    QQC2.Button {
+                        Layout.alignment: Qt.AlignRight
+                        text: "Apply"
+                        enabled: settings.changes
+
+                        onClicked: {
+                            main.config["sample-rate"] = parseFloat(cfgSampleRate.last);
+                            settings.changes = false;
+                        }
+                    }
+                }
+            }
         }
         
         QQC2.Pane {

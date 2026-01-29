@@ -2,6 +2,7 @@
     {
         "name" : "Aorus B550",
         "match" : {"mode" : "dmi", "vendor" : "Gigabyte Technology Co., Ltd.", "product" : "B550 AORUS ELITE V2"},
+        "sample-rate" : 1.0,
         "logo":"qrc:/images/models/kymera.svg",
         "columns" : 4,
         "rows" : 4,
