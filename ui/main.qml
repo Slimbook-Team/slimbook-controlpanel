@@ -328,8 +328,6 @@ QQC2.Pane {
         
         QQC2.Pane {
             id: rawdata
-            //anchors.fill: parent
-            //visible: false
 
             Connections {
                 target: bridge
@@ -337,66 +335,73 @@ QQC2.Pane {
                 function onSensorsUpdated()
                 {
 
-                    tableModel.clear();
-
-                    for (var item in bridge.sensorList) {
-                        var sensorName = bridge.sensorList[item];
-                        tableModel.appendRow(
-                            {
-                                sensor: sensorName,
-                                label: bridge.getSensorLabel(sensorName),
-                                value: bridge.readSensor(bridge.sensorList[item])
-
-                            });
-
+                    //tableModel.clear();
+                    for (var n=0;n<tableModel.count;n++) {
+                        var sensor = tableModel.get(n).sensor;
+                        tableModel.get(n).value = bridge.readSensor(sensor);
                     }
 
-                    tableView.forceLayout();
+                }
+            }
+
+            Component.onCompleted: {
+                for (var item in bridge.sensorList) {
+                    var sensorName = bridge.sensorList[item];
+                    tableModel.append(
+                        {
+                            sensor: sensorName,
+                            label: bridge.getSensorLabel(sensorName),
+                            value: bridge.readSensor(bridge.sensorList[item])
+
+                        });
+
                 }
             }
             
-            TableModel {
+            ListModel {
                 id: tableModel
-                TableModelColumn {
-                    display : "sensor"
-                }
 
-                TableModelColumn {
-                    display : "label"
-                }
-
-                TableModelColumn {
-                    display : "value"
-                }
-
-                rows: []
             }
 
-            TableView {
+            ListView {
                 id: tableView
                 anchors.fill: parent
                 
-                property var columnWidths: [350,300, 96]
-                columnWidthProvider: function (column) { return columnWidths[column] }
-
                 model: tableModel
-                clip: true
-                columnSpacing: 1
-                rowSpacing: 1
                 interactive: true
+                spacing: 2
 
                 delegate: Rectangle {
-                    //implicitWidth: (column == 0 ) ? 400 : 96
-
-                    implicitHeight: 32
+                    radius: 4
                     border.width: 1
+                    border.color: UI.Palette.base
+                    height: 32
+                    width: tableView.width
 
-                    Text {
-                        text: (column == 2) ? display.toFixed(2) : display
-                        anchors.centerIn: parent
+                    RowLayout {
+                        anchors.fill: parent
+
+
+                        QQC2.Label {
+                            Layout.alignment: Qt.AlignLeft
+                            //Layout.fillWidth: true
+                            Layout.leftMargin: 6
+
+                            text: (label.length > 0) ? (sensor + " ["+label+"]") : (sensor)
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        QQC2.Label {
+                            Layout.alignment: Qt.AlignRight
+                            Layout.rightMargin: 6
+                            text: value.toFixed(2)
+                        }
                     }
-                }
 
+                }
 
             }
             
