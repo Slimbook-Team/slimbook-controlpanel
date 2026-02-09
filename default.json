@@ -296,5 +296,108 @@
             }
             
         ]
+    },
+    {
+        "name" : "Creative AI9",
+        "match" : {
+            "mode" : "model",
+            "model" : 131074
+        },
+        "logo":"qrc:/images/models/creative.svg",
+        "layout" : [
+            {
+                "widget" : "SlimbookProfile",
+                "col" : 0,
+                "row" : 0
+            },
+            {
+                "widget" : "SystemProfile",
+                "col" : 1,
+                "row" : 0
+            },
+            {
+                "widget" : "Value",
+                "col" : 2,
+                "row" : 0,
+                "sensor": "rapl.intel-rapl:0",
+                "label" : "Power",
+                "unit" : "W"
+            },
+            {
+                "widget" : "MultiValue",
+                "col" : 0,
+                "row" : 1,
+                "sensor": "cpu.load.cpu[0-9]+",
+                "label" : "Load",
+                "unit" : "%",
+                "warning": 90,
+                "critical" : 99,
+                "minimum" : 0,
+                "maximum" : 100
+            },
+            {
+                "widget" : "MultiValue",
+                "col" : 2,
+                "row" : 2,
+                "sensor": "cpu.freq.cpu[0-9]+",
+                "label" : "Frequency",
+                "unit" : "Mhz",
+                "minimum" : 600,
+                "maximum" : 5100
+            },
+            {
+                "widget" : "Value",
+                "col" : 1,
+                "row" : 1,
+                "sensor": "ram.usage",
+                "label" : "RAM",
+                "unit" : "G"
+            },
+            {
+                "widget" : "Value",
+                "col" : 2,
+                "row" : 1,
+                "sensor": "battery.BAT0/capacity",
+                "label" : "Battery",
+                "unit" : "%"
+            },
+            {
+                "widget" : "CpuInfo",
+                "col" : 0,
+                "row" : 2
+            },
+            {
+                "widget" : "TDP",
+                "col" : 1,
+                "row" : 2
+            },
+            {
+                "widget" : "Value",
+                "col" : 0,
+                "row" : 3,
+                "sensor": "hwmon.fan.hwmon9/fan1_input",
+                "label" : "Fan 0",
+                "unit" : ""
+            },
+            {
+                "widget" : "Value",
+                "col" : 1,
+                "row" : 3,
+                "sensor": "hwmon.fan.hwmon9/fan2_input",
+                "label" : "Fan 1",
+                "unit" : ""
+            },
+            {
+                "widget" : "Value",
+                "col" : 2,
+                "row" : 3,
+                "sensor": "hwmon.temp.hwmon7/temp1_input",
+                "label" : "Temp",
+                "unit" : "",
+                "warning": 45,
+                "critical": 60
+            }
+            
+        ]
     }
 ]
