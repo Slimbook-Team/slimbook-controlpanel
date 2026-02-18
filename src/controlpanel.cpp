@@ -7,6 +7,7 @@
 
 #include <QApplication>
 #include <QQuickView>
+#include <QQmlEngine>
 #include <QQmlContext>
 #include <QQuickItem>
 #include <QVariant>
@@ -36,6 +37,11 @@ int main(int argc,char*argv[])
 
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    app.connect(view.engine(), &QQmlEngine::quit, [=] {
+            exit(0);
+        }
+    );
 
     QQmlContext* ctxt = view.rootContext();
     ctxt->setContextProperty(QStringLiteral("bridge"), bridge);

@@ -9,6 +9,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Material
 import QtQuick.Controls as QQC2
 import Qt.labs.qmlmodels
+import Qt.labs.platform as Platform
 
 QQC2.Pane {
     id: main
@@ -16,6 +17,18 @@ QQC2.Pane {
     height: 700
 
     property var config: undefined
+
+    Platform.SystemTrayIcon {
+        visible: true
+        icon.source: "qrc:/images/tray-base.svg"
+
+        menu: Platform.Menu {
+            Platform.MenuItem {
+                text: qsTr("Quit")
+                onTriggered: Qt.quit()
+            }
+        }
+    }
     
     ListModel {
         id: winlist
