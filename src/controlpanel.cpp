@@ -39,7 +39,7 @@ int main(int argc,char*argv[])
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
     app.connect(view.engine(), &QQmlEngine::quit, [=] {
-            exit(0);
+            QApplication::quit();
         }
     );
 

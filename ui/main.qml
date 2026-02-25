@@ -96,6 +96,14 @@ QQC2.Pane {
         QQC2.Pane {
             id: dashboard
 
+            signal reloadSettings()
+
+            onReloadSettings: {
+                console.log("Reloading settings...");
+                sampleTimer.interval = main.config["sample-rate"] * 1000;
+            }
+
+
             Component.onCompleted: {
                 console.log("Available sensors:");
                 for (var sensor in bridge.sensorList) {
@@ -224,9 +232,12 @@ QQC2.Pane {
                 console.log(bridge.getCPUName());
                 console.log(bridge.getTDP());
 
+                dashboard.reloadSettings();
+
             }
 
             Timer {
+                id: sampleTimer
                 interval: 1000
                 running: true
                 repeat: true
@@ -331,8 +342,10 @@ QQC2.Pane {
                         enabled: settings.changes
 
                         onClicked: {
-                            main.config["sample-rate"] = parseFloat(cfgSampleRate.last);
+                            main.config["sample-rate"] = parseFloat(cfgSampleRate.last.replace(",","."));
                             settings.changes = false;
+                            console.log("sample rate:",main.config["sample-rate"]);
+                            dashboard.reloadSettings();
                         }
                     }
                 }
