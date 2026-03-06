@@ -45,6 +45,7 @@ int main(int argc,char*argv[])
 
     QQmlContext* ctxt = view.rootContext();
     ctxt->setContextProperty(QStringLiteral("bridge"), bridge);
+    ctxt->setContextProperty(QStringLiteral("view"), &view);
 
     view.setSource(QUrl("qrc:/ui/main.qml"));
     view.show();

@@ -23,10 +23,19 @@ QQC2.Pane {
         icon.source: "qrc:/images/tray-base.svg"
 
         menu: Platform.Menu {
+
+            Platform.MenuItem {
+                text: qsTr("Open")
+                onTriggered: {
+                    view.show();
+                }
+            }
+
             Platform.MenuItem {
                 text: qsTr("Quit")
                 onTriggered: Qt.quit()
             }
+
         }
     }
     
