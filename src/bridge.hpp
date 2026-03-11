@@ -31,6 +31,7 @@ namespace slimbook
             Q_PROPERTY(QString product MEMBER m_product CONSTANT)
             Q_PROPERTY(uint32_t slimbookModel MEMBER m_slimbookModel CONSTANT)
             Q_PROPERTY(QString slimbookFamily MEMBER m_slimbookFamily CONSTANT)
+            Q_PROPERTY(bool isQC71 MEMBER m_isQC71 CONSTANT)
 
         public:
 
@@ -41,6 +42,8 @@ namespace slimbook
             QString m_product;
             uint32_t m_slimbookModel;
             QString m_slimbookFamily;
+
+            bool m_isQC71;
 
             Bridge(QObject *parent = nullptr);
 

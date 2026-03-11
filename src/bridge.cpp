@@ -31,6 +31,18 @@ Bridge::Bridge(QObject *parent): QObject{parent}
     m_slimbookModel = slb_info_get_model();
     m_slimbookFamily = slb_info_get_family_name();
 
+    uint32_t platform = slb_info_get_platform();
+
+    m_isQC71 = false;
+
+    if (platform == SLB_PLATFORM_QC71) {
+        uint32_t module_status = slb_info_is_module_loaded();
+
+        if (module_status != SLB_MODULE_NOT_LOADED) {
+            m_isQC71 = true;
+        }
+    }
+
     QDBusConnection bus =  QDBusConnection::systemBus();
     cpIface = new QDBusInterface("com.slimbook.controlpanel","/controlpanel","com.slimbook.controlpanel",bus);
 

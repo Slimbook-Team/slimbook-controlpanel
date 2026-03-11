@@ -18,6 +18,16 @@ QQC2.Pane {
 
     property var config: undefined
 
+    signal reloadSettings()
+    signal settingsReloaded()
+
+    onReloadSettings: {
+        console.log("Reloading settings...");
+        sampleTimer.interval = main.config["sample-rate"] * 1000;
+
+        settingsReloaded();
+    }
+
     Platform.SystemTrayIcon {
         visible: true
         icon.source: "qrc:/images/tray-base.svg"
@@ -53,10 +63,16 @@ QQC2.Pane {
             index: 1
             iconName: "qrc:/images/menu-settings.svg"
         }
+
+        ListElement {
+            name: "TDP Settings"
+            index: 2
+            iconName: "qrc:/images/menu-tdp.svg"
+        }
         
         ListElement {
             name: "Data"
-            index: 2
+            index: 3
             iconName: "qrc:/images/menu-raw.svg"
         }
         
@@ -104,14 +120,6 @@ QQC2.Pane {
         
         QQC2.Pane {
             id: dashboard
-
-            signal reloadSettings()
-
-            onReloadSettings: {
-                console.log("Reloading settings...");
-                sampleTimer.interval = main.config["sample-rate"] * 1000;
-            }
-
 
             Component.onCompleted: {
                 console.log("Available sensors:");
@@ -183,11 +191,12 @@ QQC2.Pane {
 
                 for (var i=0;i<main.config.layout.length;i++) {
                     var item = main.config.layout[i];
+                    console.log("item " + item.widget);
 
                     if (item.widget == "Value") {
                         var component = Qt.createComponent("Value.qml");
 
-                        delete item.widget;
+                        //delete item.widget;
                         var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
@@ -197,7 +206,7 @@ QQC2.Pane {
                     if (item.widget == "MultiValue") {
                         var component = Qt.createComponent("MultiValue.qml");
 
-                        delete item.widget;
+                        //delete item.widget;
                         var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
@@ -241,7 +250,7 @@ QQC2.Pane {
                 console.log(bridge.getCPUName());
                 console.log(bridge.getTDP());
 
-                dashboard.reloadSettings();
+                main.reloadSettings();
 
             }
 
@@ -354,13 +363,286 @@ QQC2.Pane {
                             main.config["sample-rate"] = parseFloat(cfgSampleRate.last.replace(",","."));
                             settings.changes = false;
                             console.log("sample rate:",main.config["sample-rate"]);
-                            dashboard.reloadSettings();
+                            main.reloadSettings();
                         }
                     }
                 }
             }
         }
         
+        QQC2.Pane {
+            id: tdpsettings
+            property bool changes: false
+
+            Connections {
+                target: main
+
+                function onSettingsReloaded() {
+                    console.log("TDP Settings...");
+
+                    if (main.config["custom-tdp"] === undefined) {
+                        txtTDP00.text = "10";
+                        txtTDP01.text = "15";
+                        txtTDP02.text = "20";
+
+                        txtTDP10.text = "10";
+                        txtTDP11.text = "15";
+                        txtTDP12.text = "20";
+
+                        txtTDP20.text = "10";
+                        txtTDP21.text = "15";
+                        txtTDP22.text = "20";
+                    }
+                    else {
+                        /*
+                        txtTDP00.text = main.config["custom-tdp"]["performance"][0];
+                        txtTDP01.text = main.config["custom-tdp"]["performance"][1];
+                        txtTDP02.text = main.config["custom-tdp"]["performance"][2];
+
+                        txtTDP10.text = main.config["custom-tdp"]["balanced"][0];
+                        txtTDP11.text = main.config["custom-tdp"]["balanced"][1];
+                        txtTDP12.text = main.config["custom-tdp"]["balanced"][2];
+
+                        txtTDP20.text = main.config["custom-tdp"]["energy-saver"][0];
+                        txtTDP21.text = main.config["custom-tdp"]["energy-saver"][1];
+                        txtTDP22.text = main.config["custom-tdp"]["energy-saver"][2];
+
+                        */
+
+                    }
+                }
+            }
+
+            ColumnLayout {
+                anchors.fill: parent
+
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    QQC2.CheckBox {
+                        id: chkTDPEnable
+                        checked: false
+                        text: qsTr("Enable custom TDP profiles")
+
+                        onClicked: {
+                            tdpsettings.changes = true;
+                        }
+                    }
+                }
+
+                GridLayout {
+                    id: gridTDP
+                    enabled: chkTDPEnable.checked
+
+                    Layout.fillWidth: true
+                    rows: 4
+                    columns: 4
+
+                    QQC2.Label {
+                        Layout.row: 1
+                        Layout.column: 0
+
+                        text: "Performance"
+                    }
+
+                    QQC2.Label {
+                        Layout.row: 2
+                        Layout.column: 0
+
+                        text: "Balanced"
+                    }
+
+                    QQC2.Label {
+                        Layout.row: 3
+                        Layout.column: 0
+
+                        text: "Energy Saver"
+                    }
+
+                    QQC2.Label {
+                        Layout.row: 0
+                        Layout.column: 1
+
+                        text: "Sustain"
+                    }
+
+                    QQC2.Label {
+                        Layout.row: 0
+                        Layout.column: 2
+
+                        text: "Short"
+                    }
+
+                    QQC2.Label {
+                        Layout.row: 0
+                        Layout.column: 3
+
+                        text: "Peak"
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP00
+
+                        Layout.row: 1
+                        Layout.column: 1
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP01
+
+                        Layout.row: 1
+                        Layout.column: 2
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP02
+
+                        Layout.row: 1
+                        Layout.column: 3
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP10
+
+                        Layout.row: 2
+                        Layout.column: 1
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP11
+
+                        Layout.row: 2
+                        Layout.column: 2
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP12
+
+                        Layout.row: 2
+                        Layout.column: 3
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP20
+
+                        Layout.row: 3
+                        Layout.column: 1
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP21
+
+                        Layout.row: 3
+                        Layout.column: 2
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+
+                    QQC2.TextField {
+                        id: txtTDP22
+
+                        Layout.row: 3
+                        Layout.column: 3
+                        Layout.preferredWidth: 64
+
+                        validator: IntValidator {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                }
+
+                RowLayout {
+                    Layout.alignment: Qt.AlignBottom
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    QQC2.Button {
+                        Layout.alignment: Qt.AlignRight
+                        text: "Apply"
+                        enabled: tdpsettings.changes
+
+                        onClicked: {
+
+                            main.config["custom-tdp"] = {
+                                "enabled":chkTDPEnable.checked,
+                                "energy-saver" : [
+                                    parseInt(txtTDP20.text),
+                                    parseInt(txtTDP21.text),
+                                    parseInt(txtTDP22.text)
+                                ],
+                                "balanced" : [
+                                    parseInt(txtTDP10.text),
+                                    parseInt(txtTDP11.text),
+                                    parseInt(txtTDP12.text)
+                                ],
+                                "performance" : [
+                                    parseInt(txtTDP00.text),
+                                    parseInt(txtTDP01.text),
+                                    parseInt(txtTDP02.text)
+                                ]
+                            };
+
+                            bridge.saveConfig(main.config);
+                            tdpsettings.changes = false;
+                        }
+                    }
+                }
+            }
+        }
+
         QQC2.Pane {
             id: rawdata
 
