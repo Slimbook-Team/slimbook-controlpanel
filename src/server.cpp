@@ -167,10 +167,17 @@ QVariantList Server::getTDP()
 {
     QVariantList tdp;
 
+    double pl1 = 0;
+    double pl2 = 0;
+    double pl4 = 0;
+
     stringstream out;
     
     if (m_cpuName.contains("Intel")) {
-        tdp<<200.0<<200<<200; //hack
+        //HACK
+        pl1 = 200;
+        pl2 = 200;
+        pl4 = 200;
     }
     
     if (m_cpuName.contains("AMD")) {
@@ -197,9 +204,19 @@ QVariantList Server::getTDP()
                     
                     uint32_t offset = std::stoi(raw_offset,0,16);
                     double value = std::stof(raw_value);
-                    
-                    if (offset == 0x0000 or offset == 0x0008 or offset == 0x0010) {
-                        tdp<<offset<<value;
+
+                    switch (offset) {
+                        case 0x0000:
+                            pl1 = value;
+                        break;
+
+                        case 0x0008:
+                            pl2 = value;
+                        break;
+
+                        case 0x0010:
+                            pl4 = value;
+                        break;
                     }
                     
                 }
@@ -207,5 +224,8 @@ QVariantList Server::getTDP()
             }
         }
     }
+
+    tdp<<pl1<<pl2<<pl4;
+
     return tdp;
 }

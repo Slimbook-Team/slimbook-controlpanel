@@ -26,6 +26,7 @@ Item {
 
         function onSensorsUpdated()
         {
+            //we may need another signal for this
             var tmp = bridge.getTDP();
             stapm = tmp[1];
         }

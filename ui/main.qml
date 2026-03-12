@@ -191,9 +191,9 @@ QQC2.Pane {
 
                 for (var i=0;i<main.config.layout.length;i++) {
                     var item = main.config.layout[i];
-                    console.log("item " + item.widget);
+                    console.log("item " + item.objectName);
 
-                    if (item.widget == "Value") {
+                    if (item.objectName == "Value") {
                         var component = Qt.createComponent("Value.qml");
 
                         //delete item.widget;
@@ -203,7 +203,7 @@ QQC2.Pane {
                         o.Layout.column = item.col;
                     }
 
-                    if (item.widget == "MultiValue") {
+                    if (item.objectName == "MultiValue") {
                         var component = Qt.createComponent("MultiValue.qml");
 
                         //delete item.widget;
@@ -213,7 +213,7 @@ QQC2.Pane {
                         o.Layout.column = item.col;
                     }
 
-                    if (item.widget == "SystemProfile") {
+                    if (item.objectName == "SystemProfile") {
                         var component = Qt.createComponent("SystemProfile.qml");
                         var o = component.createObject(container,{});
 
@@ -221,7 +221,7 @@ QQC2.Pane {
                         o.Layout.column = item.col;
                     }
 
-                    if (item.widget == "CpuInfo") {
+                    if (item.objectName == "CpuInfo") {
                         var component = Qt.createComponent("CpuInfo.qml");
                         var o = component.createObject(container,{});
 
@@ -229,7 +229,7 @@ QQC2.Pane {
                         o.Layout.column = item.col;
                     }
 
-                    if (item.widget == "SlimbookProfile") {
+                    if (item.objectName == "SlimbookProfile") {
                         var component = Qt.createComponent("SlimbookProfile.qml");
                         var o = component.createObject(container,{});
 
@@ -237,7 +237,7 @@ QQC2.Pane {
                         o.Layout.column = item.col;
                     }
 
-                    if (item.widget == "TDP") {
+                    if (item.objectName == "TDP") {
                         var component = Qt.createComponent("TDP.qml");
                         var o = component.createObject(container,{});
 
@@ -381,20 +381,35 @@ QQC2.Pane {
                     console.log("TDP Settings...");
 
                     if (main.config["custom-tdp"] === undefined) {
-                        txtTDP00.text = "10";
-                        txtTDP01.text = "15";
-                        txtTDP02.text = "20";
 
-                        txtTDP10.text = "10";
-                        txtTDP11.text = "15";
-                        txtTDP12.text = "20";
+                        var pl = bridge.getTDP();
 
-                        txtTDP20.text = "10";
-                        txtTDP21.text = "15";
-                        txtTDP22.text = "20";
+                        if (pl[0] < 1) {
+                            pl[0] = 10;
+                        }
+
+                        if (pl[1] < 1) {
+                            pl[1] = 15;
+                        }
+
+                        if (pl[2] < 1) {
+                            pl[2] = 20;
+                        }
+
+                        txtTDP00.text = pl[0];
+                        txtTDP01.text = pl[1];
+                        txtTDP02.text = pl[2];
+
+                        txtTDP10.text = pl[0];
+                        txtTDP11.text = pl[1];
+                        txtTDP12.text = pl[2];
+
+                        txtTDP20.text = pl[0];
+                        txtTDP21.text = pl[1];
+                        txtTDP22.text = pl[2];
                     }
                     else {
-                        /*
+
                         txtTDP00.text = main.config["custom-tdp"]["performance"][0];
                         txtTDP01.text = main.config["custom-tdp"]["performance"][1];
                         txtTDP02.text = main.config["custom-tdp"]["performance"][2];
@@ -407,8 +422,7 @@ QQC2.Pane {
                         txtTDP21.text = main.config["custom-tdp"]["energy-saver"][1];
                         txtTDP22.text = main.config["custom-tdp"]["energy-saver"][2];
 
-                        */
-
+                        chkTDPEnable.checked = main.config["custom-tdp"]["enabled"];
                     }
                 }
             }

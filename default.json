@@ -8,22 +8,22 @@
         "rows" : 4,
         "layout": [
             {
-                "widget" : "CpuInfo",
+                "objectName" : "CpuInfo",
                 "col" : 0,
                 "row" : 0
             },
             {
-                "widget" : "SystemProfile",
+                "objectName" : "SystemProfile",
                 "col" : 1,
                 "row" : 0
             },
             {
-                "widget" : "TDP",
+                "objectName" : "TDP",
                 "col" : 2,
                 "row" : 0
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 3,
                 "row" : 0,
                 "sensor": "rapl.intel-rapl:0",
@@ -36,7 +36,7 @@
             },
 
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 0,
                 "row" : 1,
                 "sensor": "hwmon.temp.hwmon2/temp1_input",
@@ -49,7 +49,7 @@
             },
 
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 1,
                 "row" : 1,
                 "sensor": "cpu.load.cpu[0-9]+",
@@ -59,7 +59,7 @@
                 "maximum" : 100
             },
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 2,
                 "row" : 1,
                 "sensor": "cpu.freq.cpu[0-9]+",
@@ -69,7 +69,7 @@
                 "maximum" : 4673
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 3,
                 "row" : 1,
                 "sensor": "cpu.load.average",
@@ -78,7 +78,7 @@
             },
 
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 0,
                 "row" : 2,
                 "sensor": "ram.usage",
@@ -100,17 +100,17 @@
         "rows" : 4,
         "layout" : [
             {
-                "widget" : "SlimbookProfile",
+                "objectName" : "SlimbookProfile",
                 "col" : 0,
                 "row" : 0
             },
             {
-                "widget" : "SystemProfile",
+                "objectName" : "SystemProfile",
                 "col" : 1,
                 "row" : 0
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 0,
                 "sensor": "rapl.intel-rapl:0",
@@ -118,7 +118,7 @@
                 "unit" : "W"
             },
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 0,
                 "row" : 1,
                 "sensor": "cpu.load.cpu[0-9]+",
@@ -130,7 +130,7 @@
                 "maximum" : 100
             },
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 2,
                 "row" : 2,
                 "sensor": "cpu.freq.cpu[0-9]+",
@@ -140,7 +140,7 @@
                 "maximum" : 5100
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 1,
                 "row" : 1,
                 "sensor": "ram.usage",
@@ -148,7 +148,7 @@
                 "unit" : "G"
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 1,
                 "sensor": "battery.BAT0/capacity",
@@ -156,17 +156,17 @@
                 "unit" : "%"
             },
             {
-                "widget" : "CpuInfo",
+                "objectName" : "CpuInfo",
                 "col" : 0,
                 "row" : 2
             },
             {
-                "widget" : "TDP",
+                "objectName" : "TDP",
                 "col" : 1,
                 "row" : 2
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 0,
                 "row" : 3,
                 "sensor": "hwmon.fan.hwmon9/fan1_input",
@@ -174,7 +174,7 @@
                 "unit" : ""
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 1,
                 "row" : 3,
                 "sensor": "hwmon.fan.hwmon9/fan2_input",
@@ -182,7 +182,7 @@
                 "unit" : ""
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 3,
                 "sensor": "hwmon.temp.hwmon7/temp1_input",
@@ -203,17 +203,17 @@
         "logo":"qrc:/images/models/executive.svg",
         "layout" : [
             {
-                "widget" : "SlimbookProfile",
+                "objectName" : "SlimbookProfile",
                 "col" : 0,
                 "row" : 0
             },
             {
-                "widget" : "SystemProfile",
+                "objectName" : "SystemProfile",
                 "col" : 1,
                 "row" : 0
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 0,
                 "sensor": "rapl.intel-rapl:0",
@@ -221,7 +221,7 @@
                 "unit" : "W"
             },
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 0,
                 "row" : 1,
                 "sensor": "cpu.load.cpu[0-9]+",
@@ -233,7 +233,7 @@
                 "maximum" : 100
             },
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 2,
                 "row" : 2,
                 "sensor": "cpu.freq.cpu[0-9]+",
@@ -243,7 +243,7 @@
                 "maximum" : 5100
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 1,
                 "row" : 1,
                 "sensor": "ram.usage",
@@ -251,7 +251,7 @@
                 "unit" : "G"
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 1,
                 "sensor": "battery.BAT0/capacity",
@@ -259,17 +259,17 @@
                 "unit" : "%"
             },
             {
-                "widget" : "CpuInfo",
+                "objectName" : "CpuInfo",
                 "col" : 0,
                 "row" : 2
             },
             {
-                "widget" : "TDP",
+                "objectName" : "TDP",
                 "col" : 1,
                 "row" : 2
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 0,
                 "row" : 3,
                 "sensor": "hwmon.fan.hwmon8/fan1_input",
@@ -277,7 +277,7 @@
                 "unit" : ""
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 1,
                 "row" : 3,
                 "sensor": "hwmon.fan.hwmon8/fan2_input",
@@ -285,7 +285,7 @@
                 "unit" : ""
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 3,
                 "sensor": "hwmon.temp.hwmon2/temp1_input",
@@ -306,17 +306,17 @@
         "logo":"qrc:/images/models/creative.svg",
         "layout" : [
             {
-                "widget" : "SlimbookProfile",
+                "objectName" : "SlimbookProfile",
                 "col" : 0,
                 "row" : 0
             },
             {
-                "widget" : "SystemProfile",
+                "objectName" : "SystemProfile",
                 "col" : 1,
                 "row" : 0
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 0,
                 "sensor": "rapl.intel-rapl:0",
@@ -324,7 +324,7 @@
                 "unit" : "W"
             },
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 0,
                 "row" : 1,
                 "sensor": "cpu.load.cpu[0-9]+",
@@ -336,7 +336,7 @@
                 "maximum" : 100
             },
             {
-                "widget" : "MultiValue",
+                "objectName" : "MultiValue",
                 "col" : 2,
                 "row" : 2,
                 "sensor": "cpu.freq.cpu[0-9]+",
@@ -346,7 +346,7 @@
                 "maximum" : 5100
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 1,
                 "row" : 1,
                 "sensor": "ram.usage",
@@ -354,7 +354,7 @@
                 "unit" : "G"
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 1,
                 "sensor": "battery.BAT0/capacity",
@@ -362,17 +362,17 @@
                 "unit" : "%"
             },
             {
-                "widget" : "CpuInfo",
+                "objectName" : "CpuInfo",
                 "col" : 0,
                 "row" : 2
             },
             {
-                "widget" : "TDP",
+                "objectName" : "TDP",
                 "col" : 1,
                 "row" : 2
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 0,
                 "row" : 3,
                 "sensor": "hwmon.fan.hwmon9/fan1_input",
@@ -380,7 +380,7 @@
                 "unit" : ""
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 1,
                 "row" : 3,
                 "sensor": "hwmon.fan.hwmon9/fan2_input",
@@ -388,7 +388,7 @@
                 "unit" : ""
             },
             {
-                "widget" : "Value",
+                "objectName" : "Value",
                 "col" : 2,
                 "row" : 3,
                 "sensor": "hwmon.temp.hwmon7/temp1_input",
