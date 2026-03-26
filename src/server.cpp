@@ -57,7 +57,7 @@ QVariantList ServerAdaptor::getTDP()
 
 void ServerAdaptor::setTDP(double pl1, double pl2, double pl4, uint32_t flags)
 {
-    return m_server->setTDP(pl1,pl2,pl4,flags);
+    m_server->setTDP(pl1,pl2,pl4,flags);
 }
 
 Server::Server(QObject *parent) : QObject{parent}
@@ -237,6 +237,20 @@ QVariantList Server::getTDP()
 
 void Server::setTDP(double pl1, double pl2, double pl4, uint32_t flags)
 {
+    clog<<"setTDP"<<endl;
     //ToDo:
     //Set either qc71 tdp, ryzenadj or intel via sysfs interface
+    if (m_cpuName.contains("AMD")) {
+        string a="-a" + std::to_string(static_cast<uint32_t>(pl1*1000.0));
+        string b="-b" + std::to_string(static_cast<uint32_t>(pl2*1000.0));
+        string c="-c" + std::to_string(static_cast<uint32_t>(pl4*1000.0));
+        stringstream out;
+
+        int status = get_process_output("ryzenadj", {a,b,c}, out);
+        clog<<"ryzenadj status:"<<status<<endl;
+        if (status != 0) {
+            cerr<<"Failed to set TDP with ryzenadj:"<<status<<endl;
+        }
+
+    }
 }

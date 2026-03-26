@@ -205,7 +205,10 @@ QVariantList Bridge::getTDP()
 
 void Bridge::setTDP(double pl1, double pl2, double pl4)
 {
-
+    cpIface->call("setTDP",QVariant(pl1),
+                            QVariant(pl2),
+                            QVariant(pl4),
+                            QVariant::fromValue(quint32(0)));
 }
 
 void Bridge::onUpowerPropertiesChanged(const QString &interfaceName,

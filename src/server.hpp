@@ -81,7 +81,7 @@ namespace slimbook
 
             QVariantList getTDP();
 
-            void setTDP(double pl1, double pl2, double pl4, uint32_t flags);
+            Q_NOREPLY void setTDP(double pl1, double pl2, double pl4, uint32_t flags);
 
         private:
 
