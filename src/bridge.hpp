@@ -57,6 +57,7 @@ namespace slimbook
             Q_INVOKABLE QString getCPUName();
             Q_INVOKABLE QString getQC71Profile();
             Q_INVOKABLE QVariantList getTDP();
+            Q_INVOKABLE void setTDP(double pl1, double pl2, double pl4);
 
             Q_SIGNALS:
 

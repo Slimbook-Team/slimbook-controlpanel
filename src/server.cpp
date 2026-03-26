@@ -55,6 +55,11 @@ QVariantList ServerAdaptor::getTDP()
     return m_server->getTDP();
 }
 
+void ServerAdaptor::setTDP(double pl1, double pl2, double pl4, uint32_t flags)
+{
+    return m_server->setTDP(pl1,pl2,pl4,flags);
+}
+
 Server::Server(QObject *parent) : QObject{parent}
 {
     stringstream out;
@@ -228,4 +233,10 @@ QVariantList Server::getTDP()
     tdp<<pl1<<pl2<<pl4;
 
     return tdp;
+}
+
+void Server::setTDP(double pl1, double pl2, double pl4, uint32_t flags)
+{
+    //ToDo:
+    //Set either qc71 tdp, ryzenadj or intel via sysfs interface
 }

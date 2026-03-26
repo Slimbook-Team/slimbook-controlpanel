@@ -21,6 +21,29 @@ QQC2.Pane {
     signal reloadSettings()
     signal settingsReloaded()
 
+    function setCustomTDP(profile) {
+        if (main.config["custom-tdp"]["enabled"]) {
+            console.log("Setting a custom TDP...");
+
+            bridge.setTDP(main.config["custom-tdp"][profile][0],
+                          main.config["custom-tdp"][profile][1],
+                          main.config["custom-tdp"][profile][2]);
+        }
+        else {
+            if (bridge.isQC71) {
+                //disable custom tdp feature
+            }
+        }
+    }
+
+    Connections {
+        target: bridge
+
+        onUpowerProfileChanged: {
+            setCustomTDP(bridge.upowerProfile);
+        }
+    }
+
     onReloadSettings: {
         console.log("Reloading settings...");
         sampleTimer.interval = main.config["sample-rate"] * 1000;
@@ -374,6 +397,29 @@ QQC2.Pane {
             id: tdpsettings
             property bool changes: false
 
+            function applySettings() {
+                main.config["custom-tdp"] = {
+                    "enabled":chkTDPEnable.checked,
+                    "power-saver" : [
+                        parseInt(txtTDP20.text),
+                        parseInt(txtTDP21.text),
+                        parseInt(txtTDP22.text)
+                    ],
+                    "balanced" : [
+                        parseInt(txtTDP10.text),
+                        parseInt(txtTDP11.text),
+                        parseInt(txtTDP12.text)
+                    ],
+                    "performance" : [
+                        parseInt(txtTDP00.text),
+                        parseInt(txtTDP01.text),
+                        parseInt(txtTDP02.text)
+                    ]
+                };
+
+                bridge.saveConfig(main.config);
+            }
+
             Connections {
                 target: main
 
@@ -407,6 +453,8 @@ QQC2.Pane {
                         txtTDP20.text = pl[0];
                         txtTDP21.text = pl[1];
                         txtTDP22.text = pl[2];
+
+                        tdpsettings.applySettings();
                     }
                     else {
 
@@ -418,9 +466,9 @@ QQC2.Pane {
                         txtTDP11.text = main.config["custom-tdp"]["balanced"][1];
                         txtTDP12.text = main.config["custom-tdp"]["balanced"][2];
 
-                        txtTDP20.text = main.config["custom-tdp"]["energy-saver"][0];
-                        txtTDP21.text = main.config["custom-tdp"]["energy-saver"][1];
-                        txtTDP22.text = main.config["custom-tdp"]["energy-saver"][2];
+                        txtTDP20.text = main.config["custom-tdp"]["power-saver"][0];
+                        txtTDP21.text = main.config["custom-tdp"]["power-saver"][1];
+                        txtTDP22.text = main.config["custom-tdp"]["power-saver"][2];
 
                         chkTDPEnable.checked = main.config["custom-tdp"]["enabled"];
                     }
@@ -630,26 +678,7 @@ QQC2.Pane {
 
                         onClicked: {
 
-                            main.config["custom-tdp"] = {
-                                "enabled":chkTDPEnable.checked,
-                                "energy-saver" : [
-                                    parseInt(txtTDP20.text),
-                                    parseInt(txtTDP21.text),
-                                    parseInt(txtTDP22.text)
-                                ],
-                                "balanced" : [
-                                    parseInt(txtTDP10.text),
-                                    parseInt(txtTDP11.text),
-                                    parseInt(txtTDP12.text)
-                                ],
-                                "performance" : [
-                                    parseInt(txtTDP00.text),
-                                    parseInt(txtTDP01.text),
-                                    parseInt(txtTDP02.text)
-                                ]
-                            };
-
-                            bridge.saveConfig(main.config);
+                            tdpsettings.applySettings();
                             tdpsettings.changes = false;
                         }
                     }

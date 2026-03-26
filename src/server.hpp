@@ -45,6 +45,8 @@ namespace slimbook
 
             QVariantList getTDP();
 
+            void setTDP(double pl1, double pl2, double pl4, uint32_t flags);
+
         private:
 
             std::vector<Sensor*> inputs;
@@ -78,6 +80,8 @@ namespace slimbook
             QString getQC71Profile();
 
             QVariantList getTDP();
+
+            void setTDP(double pl1, double pl2, double pl4, uint32_t flags);
 
         private:
 

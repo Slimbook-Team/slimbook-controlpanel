@@ -203,6 +203,11 @@ QVariantList Bridge::getTDP()
     }
 }
 
+void Bridge::setTDP(double pl1, double pl2, double pl4)
+{
+
+}
+
 void Bridge::onUpowerPropertiesChanged(const QString &interfaceName,
                          const QVariantMap &changedProperties,
                          const QStringList &invalidatedProperties)
