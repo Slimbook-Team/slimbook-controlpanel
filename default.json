@@ -1,5 +1,49 @@
 [
     {
+        "name" : "Default",
+        "match" : {"mode":"default"},
+        "sample-rate" : 1.0,
+        "logo":"qrc:/images/models/default.svg",
+        "layout": [
+            {
+                "objectName" : "CpuInfo",
+                "col" : 0,
+                "row" : 0
+            },
+            {
+                "objectName" : "SystemProfile",
+                "col" : 1,
+                "row" : 0
+            },
+            {
+                "objectName" : "TDP",
+                "col" : 2,
+                "row" : 0
+            },
+            {
+                "objectName" : "MultiValue",
+                "col" : 1,
+                "row" : 1,
+                "sensor": "cpu.load.cpu[0-9]+",
+                "label" : "Load",
+                "unit" : "%",
+                "minimum" : 0,
+                "maximum" : 100
+            },
+            {
+                "objectName" : "Value",
+                "col" : 0,
+                "row" : 2,
+                "sensor": "ram.usage",
+                "label" : "Ram",
+                "unit" : "%",
+                "minimum" : 0.0,
+                "maximum" : 100.0
+            }
+
+        ]
+    },
+    {
         "name" : "Aorus B550",
         "match" : {"mode" : "dmi", "vendor" : "Gigabyte Technology Co., Ltd.", "product" : "B550 AORUS ELITE V2"},
         "sample-rate" : 1.0,
@@ -96,6 +140,8 @@
             "mode" : "family",
             "family" : "evo"
         },
+        "sample-rate" : 1.0,
+        "logo":"qrc:/images/models/evo.svg",
         "columns" : 4,
         "rows" : 4,
         "layout" : [
@@ -201,6 +247,7 @@
             "model" : 260
         },
         "logo":"qrc:/images/models/executive.svg",
+        "sample-rate" : 1.0,
         "layout" : [
             {
                 "objectName" : "SlimbookProfile",
@@ -304,6 +351,7 @@
             "model" : 131074
         },
         "logo":"qrc:/images/models/creative.svg",
+        "sample-rate" : 1.0,
         "layout" : [
             {
                 "objectName" : "SlimbookProfile",
