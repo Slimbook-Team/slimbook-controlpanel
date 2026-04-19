@@ -1,0 +1,13 @@
+Source: slimbook-controlpanel
+Section: utils
+Priority: optional
+Maintainer: Slimbook <dev@slimbook.es>
+Build-Depends: debhelper-compat (=13), meson, ninja-build, g++ (>=11)
+Standards-Version: 4.6.0
+Homepage: https://github.com/Slimbook-Team/slimbook-controlpanel
+
+Package: slimbook-controlpanel
+Architecture: amd64
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Slimbook Control Panel
+ Slimbook Control Panel
