@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/slimbook-controlpanel
+TryExec=/usr/bin/slimbook-controlpanel
+Icon=slimbook-controlpanel
+Categories=Utility
+Terminal=false
+Hidden=false
+NoDisplay=false
+StartupNotify=false
+Encoding=UTF-8
+Name=Slimbook Control Panel

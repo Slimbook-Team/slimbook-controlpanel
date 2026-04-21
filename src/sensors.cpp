@@ -393,6 +393,7 @@ map<std::string,std::string> CpuLoadSensor::read_stat()
 void CpuLoadSensor::update()
 {
     map<std::string,std::string> values = read_stat();
+    auto now = std::chrono::steady_clock::now();
 
     double avg = 0;
     Node* average = nullptr;
@@ -404,10 +405,12 @@ void CpuLoadSensor::update()
         }
         else {
             double actual = std::stoll(values[node.name]);
-            node.value = actual - node.raw;
+            double delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - node.timestamp).count() / 1000.0;
+            node.value = (actual - node.raw) / delta;
             node.value = 100 - std::min(node.value,100.0);
+
             node.raw = actual;
-            node.timestamp = std::chrono::steady_clock::now();
+            node.timestamp = now;
             avg = avg + node.value;
         }
     }
@@ -416,7 +419,7 @@ void CpuLoadSensor::update()
         avg = avg / (children.size() - 1);
         average->raw = avg;
         average->value = avg;
-        average->timestamp = std::chrono::steady_clock::now();
+        average->timestamp = now;
     }
 }
 
