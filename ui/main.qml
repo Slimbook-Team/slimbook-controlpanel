@@ -76,25 +76,25 @@ QQC2.Pane {
         id: winlist
         
         ListElement {
-            name: "Dashboard"
+            name: qsTr("Dashboard")
             index: 0
             iconName: "qrc:/images/menu-dashboard.svg"
         }
         
         ListElement {
-            name: "Settings"
+            name: qsTr("Settings")
             index: 1
             iconName: "qrc:/images/menu-settings.svg"
         }
 
         ListElement {
-            name: "TDP Settings"
+            name: qsTr("TDP Settings")
             index: 2
             iconName: "qrc:/images/menu-tdp.svg"
         }
         
         ListElement {
-            name: "Data"
+            name: qsTr("Data")
             index: 3
             iconName: "qrc:/images/menu-raw.svg"
         }
@@ -163,6 +163,7 @@ QQC2.Pane {
                     for (var n=0;n<config.length;n++) {
 
                         var match = false;
+                        var defaultConfig = undefined;
 
                         switch (config[n].match.mode) {
                             case "dmi":
@@ -188,6 +189,10 @@ QQC2.Pane {
                                     match = true;
                                 }
                             break;
+
+                            case "default":
+                                defaultConfig = config[n];
+                            break;
                         }
 
                         console.log("* ",config[n].name," match:",match);
@@ -203,6 +208,10 @@ QQC2.Pane {
                         bridge.saveConfig(config[n]);
                         break;
 
+                    }
+
+                    if (main.config === undefined && defaultConfig !== undefined) {
+                        main.config = Object.assign({}, defaultConfig);
                     }
 
                 }
@@ -504,42 +513,42 @@ QQC2.Pane {
                         Layout.row: 1
                         Layout.column: 0
 
-                        text: "Performance"
+                        text: qsTr("Performance")
                     }
 
                     QQC2.Label {
                         Layout.row: 2
                         Layout.column: 0
 
-                        text: "Balanced"
+                        text: qsTr("Balanced")
                     }
 
                     QQC2.Label {
                         Layout.row: 3
                         Layout.column: 0
 
-                        text: "Energy Saver"
+                        text: qsTr("Energy Saver")
                     }
 
                     QQC2.Label {
                         Layout.row: 0
                         Layout.column: 1
 
-                        text: "Sustain"
+                        text: qsTr("Sustain")
                     }
 
                     QQC2.Label {
                         Layout.row: 0
                         Layout.column: 2
 
-                        text: "Short"
+                        text: qsTr("Short")
                     }
 
                     QQC2.Label {
                         Layout.row: 0
                         Layout.column: 3
 
-                        text: "Peak"
+                        text: qsTr("Peak")
                     }
 
                     QQC2.TextField {
@@ -673,7 +682,7 @@ QQC2.Pane {
 
                     QQC2.Button {
                         Layout.alignment: Qt.AlignRight
-                        text: "Apply"
+                        text: qsTr("Apply")
                         enabled: tdpsettings.changes
 
                         onClicked: {
