@@ -1,4 +1,4 @@
 [D-BUS Service]
 Name=com.slimbook.controlpanel
-Exec=/usr/sbin/slimbook-controlpanel-server
+Exec=/usr/bin/slimbook-controlpanel-server
 User=root

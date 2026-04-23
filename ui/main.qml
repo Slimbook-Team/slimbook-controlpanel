@@ -6,7 +6,7 @@ import "." as UI
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.Material
+//import QtQuick.Controls.Material
 import QtQuick.Controls as QQC2
 import Qt.labs.qmlmodels
 import Qt.labs.platform as Platform
@@ -211,7 +211,9 @@ QQC2.Pane {
                     }
 
                     if (main.config === undefined && defaultConfig !== undefined) {
+                        console.log("using default template");
                         main.config = Object.assign({}, defaultConfig);
+                        bridge.saveConfig(main.config);
                     }
 
                 }
