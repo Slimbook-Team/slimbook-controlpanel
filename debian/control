@@ -8,6 +8,6 @@ Homepage: https://github.com/Slimbook-Team/slimbook-controlpanel
 
 Package: slimbook-controlpanel
 Architecture: amd64
-Depends: ${misc:Depends}, ${shlibs:Depends}, qml6-module-qt-labs-platform
+Depends: ${misc:Depends}, ${shlibs:Depends}, qml6-module-qt-labs-platform, ryzenadj, intel-undervolt
 Description: Slimbook Control Panel
  Slimbook Control Panel

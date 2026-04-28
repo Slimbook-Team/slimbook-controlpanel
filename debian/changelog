@@ -1,3 +1,11 @@
+slimbook-controlpanel (0.9.4) resolute; urgency=medium
+
+  * Using a light tray icon (still wip)
+  * Dont close app when window is closed (make this default behaviour)
+  * Not forcing material lnf
+
+ -- Slimbook <dev@slimbook.es>  Tue, 28 Apr 2026 23:06:55 +0200
+
 slimbook-controlpanel (0.9.3) resolute; urgency=medium
 
   * Fixed server not loaded
