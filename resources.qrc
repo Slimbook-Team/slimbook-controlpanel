@@ -32,5 +32,6 @@
     <file>images/models/nas.svg</file>
 
     <file>images/tray-base.svg</file>
+    <file>images/tray-base-light.svg</file>
 </qresource>
 </RCC>
