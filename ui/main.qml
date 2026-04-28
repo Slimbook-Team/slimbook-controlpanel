@@ -53,7 +53,7 @@ QQC2.Pane {
 
     Platform.SystemTrayIcon {
         visible: true
-        icon.source: "qrc:/images/tray-base.svg"
+        icon.source: "qrc:/images/tray-base-light.svg"
 
         menu: Platform.Menu {
 

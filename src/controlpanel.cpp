@@ -31,6 +31,7 @@ using namespace std;
 int main(int argc,char*argv[])
 {
 
+    QApplication::setQuitOnLastWindowClosed(false);
     QApplication app(argc,argv);
 
     Bridge* bridge = new Bridge();
