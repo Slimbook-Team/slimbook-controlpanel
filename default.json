@@ -226,15 +226,15 @@
                 "objectName" : "Value",
                 "col" : 0,
                 "row" : 3,
-                "sensor": "hwmon.fan.hwmon9/fan1_input",
-                "label" : "Fan 0",
+                "sensor": "label:qc71_laptop.hwmon.fan.fan1_input",
+                "label" : "Fan 1",
                 "unit" : ""
             },
             {
                 "objectName" : "Value",
                 "col" : 1,
                 "row" : 3,
-                "sensor": "hwmon.fan.hwmon9/fan2_input",
+                "sensor": "label:qc71_laptop.hwmon.fan.fan1_input",
                 "label" : "Fan 1",
                 "unit" : ""
             },
@@ -242,7 +242,7 @@
                 "objectName" : "Value",
                 "col" : 2,
                 "row" : 3,
-                "sensor": "hwmon.temp.hwmon7/temp1_input",
+                "sensor": "label:k10temp.Tctl",
                 "label" : "Temp",
                 "unit" : "",
                 "warning": 45,
@@ -362,6 +362,7 @@
             "model" : 131074
         },
         "logo":"qrc:/images/models/creative.svg",
+        "rows" : 4,
         "sample-rate" : 1.0,
         "layout" : [
             {
@@ -434,29 +435,38 @@
                 "objectName" : "Value",
                 "col" : 0,
                 "row" : 3,
-                "sensor": "hwmon.fan.hwmon9/fan1_input",
-                "label" : "Fan 0",
+                "sensor": "label:qc71_laptop.hwmon.fan.fan1_input",
+                "label" : "Fan 1",
                 "unit" : ""
             },
             {
                 "objectName" : "Value",
                 "col" : 1,
                 "row" : 3,
-                "sensor": "hwmon.fan.hwmon9/fan2_input",
-                "label" : "Fan 1",
+                "sensor": "label:qc71_laptop.hwmon.fan.fan2_input",
+                "label" : "Fan 2",
                 "unit" : ""
             },
             {
                 "objectName" : "Value",
                 "col" : 2,
                 "row" : 3,
-                "sensor": "hwmon.temp.hwmon7/temp1_input",
+                "sensor": "label:k10temp.Tctl",
                 "label" : "Temp",
                 "unit" : "",
                 "warning": 45,
                 "critical": 60
+            },
+            {
+                "objectName" : "Value",
+                "col" : 0,
+                "row" : 4,
+                "sensor": "label:amdgpu.load.150e",
+                "label" : "GPU Load",
+                "unit" : "",
+                "minimum": 0.0,
+                "maximum": 100.0
             }
-            
         ]
     }
 ]
