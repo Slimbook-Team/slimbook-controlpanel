@@ -121,6 +121,16 @@ double Server::readSensor(QString sensor)
 {
     string path = sensor.toStdString();
 
+    if (path.size() > 6 and path.find("label:") == 0) {
+        path = path.substr(6);
+
+        for (const auto & kpair : nodes) {
+            if (kpair.second->label == path) {
+                return kpair.second->value;
+            }
+        }
+    }
+
     if (nodes.find(path) != nodes.end()) {
         return nodes[path]->value;
     }

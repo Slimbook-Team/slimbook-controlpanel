@@ -83,7 +83,7 @@
                 "objectName" : "Value",
                 "col" : 0,
                 "row" : 1,
-                "sensor": "hwmon.temp.hwmon2/temp1_input",
+                "sensor": "label:k10temp.Tctl",
                 "label" : "CPU Temp",
                 "unit" : "",
                 "warning": 50,
