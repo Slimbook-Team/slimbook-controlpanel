@@ -519,3 +519,48 @@ void BatterySensor::update()
 
     }
 }
+
+AmdGpuLoadSensor::AmdGpuLoadSensor():Sensor("amdgpu.load")
+{
+    const std::filesystem::path base{"/sys/class/drm/"};
+    const std::regex card_regex("card[0-9]");
+
+    for (auto const& dir : std::filesystem::directory_iterator{base}) {
+        if (dir.is_directory()) {
+            string filename = dir.path().filename();
+
+            if (std::regex_match(filename, card_regex)) {
+                std::filesystem::path node = dir / std::filesystem::path("device/gpu_busy_percent");
+                std::filesystem::path device_node = dir / std::filesystem::path("device/device");
+
+                if (std::filesystem::exists(node)) {
+                    Node child = Node(filename);
+
+                    if (std::filesystem::exists(device_node)) {
+                        string device_name;
+
+                        read_device(device_node,device_name);
+                        device_name = device_name.substr(2);
+                        child.label = "amdgpu.load." + device_name;
+                    }
+
+                    children.push_back(child);
+                }
+            }
+
+        }
+    }
+
+}
+
+void AmdGpuLoadSensor::update()
+{
+    for (Node& node:children) {
+
+        read_device("/sys/class/drm/"+node.name+"/device/gpu_busy_percent",node.raw);
+
+        node.value = node.raw;
+        node.timestamp = std::chrono::steady_clock::now();
+
+    }
+}

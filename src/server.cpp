@@ -87,6 +87,7 @@ Server::Server(QObject *parent) : QObject{parent}
     inputs.push_back(new CpuLoadSensor());
     inputs.push_back(new RamSensor());
     inputs.push_back(new BatterySensor());
+    inputs.push_back(new AmdGpuLoadSensor());
 
     for (Sensor* sensor : inputs) {
 
