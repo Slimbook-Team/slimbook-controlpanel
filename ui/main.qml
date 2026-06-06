@@ -125,6 +125,11 @@ QQC2.Pane {
             icon.source: iconName
             icon.width: 32
             icon.height: 32
+            icon.color:"transparent"
+            
+            flat:true
+            width:64
+            highlighted: swipe.currentIndex == index
             
             onClicked: {
                 //console.log("Move to " + index);
