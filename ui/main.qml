@@ -50,6 +50,13 @@ QQC2.Pane {
 
         settingsReloaded();
     }
+    
+    Component.onDestruction: {
+        main.config["window"] = {};
+        main.config["window"]["width"] = main.width;
+        main.config["window"]["height"] = main.height;
+        bridge.saveConfig(main.config);
+    }
 
     Platform.SystemTrayIcon {
         visible: true
@@ -221,6 +228,11 @@ QQC2.Pane {
                 if (main.config.logo !== undefined) {
                     logo.source = main.config.logo;
                     console.log("logo ",main.config.logo);
+                }
+                
+                if (main.config.window !== undefined) {
+                    main.width = main.config.window.width;
+                    main.height = main.config.window.height;
                 }
 
                 for (var i=0;i<main.config.layout.length;i++) {
