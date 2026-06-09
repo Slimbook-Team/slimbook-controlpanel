@@ -87,6 +87,7 @@ Server::Server(QObject *parent) : QObject{parent}
     inputs.push_back(new CpuLoadSensor());
     inputs.push_back(new RamSensor());
     inputs.push_back(new BatterySensor());
+    inputs.push_back(new AmdGpuLoadSensor());
 
     for (Sensor* sensor : inputs) {
 
@@ -120,6 +121,16 @@ void Server::updateSensors()
 double Server::readSensor(QString sensor)
 {
     string path = sensor.toStdString();
+
+    if (path.size() > 6 and path.find("label:") == 0) {
+        path = path.substr(6);
+
+        for (const auto & kpair : nodes) {
+            if (kpair.second->label == path) {
+                return kpair.second->value;
+            }
+        }
+    }
 
     if (nodes.find(path) != nodes.end()) {
         return nodes[path]->value;

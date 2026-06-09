@@ -194,6 +194,22 @@ namespace slimbook
 
             void update();
         };
+
+        class AmdGpuLoadSensor: public Sensor
+        {
+            public:
+
+            std::vector<Node> children;
+
+            AmdGpuLoadSensor();
+
+            std::vector<Node> &nodes()
+            {
+                return children;
+            }
+
+            void update();
+        };
     }
 
 }
