@@ -330,7 +330,7 @@
                 "objectName" : "Value",
                 "col" : 0,
                 "row" : 3,
-                "sensor": "hwmon.fan.hwmon8/fan1_input",
+                "sensor": "label:qc71_laptop.hwmon.fan.fan1_input",
                 "label" : "Fan 0",
                 "unit" : ""
             },
@@ -338,7 +338,7 @@
                 "objectName" : "Value",
                 "col" : 1,
                 "row" : 3,
-                "sensor": "hwmon.fan.hwmon8/fan2_input",
+                "sensor": "label:qc71_laptop.hwmon.fan.fan2_input",
                 "label" : "Fan 1",
                 "unit" : ""
             },
