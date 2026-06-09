@@ -1,3 +1,10 @@
+slimbook-controlpanel (0.10.0) resolute; urgency=medium
+
+  * Using sensor labels as a more robust way to match a sensor (hwmon* are not deterministic between boots)
+  * Some UI fixes (lateral tab)
+
+ -- Slimbook <dev@slimbook.es>  Tue, 09 Jun 2026 11:50:54 +0200
+
 slimbook-controlpanel (0.9.4) resolute; urgency=medium
 
   * Using a light tray icon (still wip)
