@@ -58,6 +58,7 @@ QQC2.Pane {
         bridge.saveConfig(main.config);
     }
 
+    /*
     Platform.SystemTrayIcon {
         visible: true
         icon.source: "qrc:/images/tray-base-light.svg"
@@ -78,6 +79,7 @@ QQC2.Pane {
 
         }
     }
+    */
     
     ListModel {
         id: winlist

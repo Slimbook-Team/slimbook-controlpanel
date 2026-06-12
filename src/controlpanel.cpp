@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "common.hpp"
+#include "client.hpp"
 #include "bridge.hpp"
 
 #include <QApplication>
@@ -12,6 +13,11 @@
 #include <QQuickItem>
 #include <QVariant>
 #include <QFile>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusMessage>
+#include <QDBusObjectPath>
+#include <QDBusVariant>
 #include <QDebug>
 
 #include <iostream>
@@ -28,11 +34,38 @@
 using namespace slimbook::controlpanel;
 using namespace std;
 
+bool is_alive()
+{
+    QDBusConnection connection = QDBusConnection::sessionBus();
+    QDBusInterface interface("com.slimbook.controlpanel", "/controlpanel", "org.freedesktop.DBus.Introspectable", connection);
+
+    return interface.isValid();
+}
+
+void show()
+{
+    QDBusConnection connection = QDBusConnection::sessionBus();
+    QDBusMessage msg;
+    QDBusMessage reply;
+
+    msg = QDBusMessage::createMethodCall("com.slimbook.controlpanel",
+                                         "/controlpanel",
+                                         "com.slimbook.controlpanel",
+                                         "show");
+    reply = connection.call(msg);
+}
+
 int main(int argc,char*argv[])
 {
 
     QApplication::setQuitOnLastWindowClosed(false);
     QApplication app(argc,argv);
+
+    if (is_alive()) {
+        show();
+
+        return 0;
+    }
 
     Bridge* bridge = new Bridge();
 
@@ -50,6 +83,23 @@ int main(int argc,char*argv[])
 
     view.setSource(QUrl("qrc:/ui/main.qml"));
     view.show();
+
+    QDBusConnection sessionBus = QDBusConnection::sessionBus();
+
+    if (!sessionBus.registerService("com.slimbook.controlpanel")) {
+        qDebug() << "Failed to register service:" << sessionBus.lastError().message();
+        return 1;
+    }
+
+    ClientService service;
+    service.setView(&view);
+
+    if (!sessionBus.registerObject("/controlpanel", &service, QDBusConnection::ExportAllSlots)) {
+        qDebug() << "Failed to register object:" << sessionBus.lastError().message();
+        return 1;
+    }
+
+    qInfo()<<"running app";
 
     app.exec();
 
