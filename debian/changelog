@@ -1,3 +1,10 @@
+slimbook-controlpanel (0.11.0) resolute; urgency=medium
+
+  * No longer using tray, it will (for a time) co-exists with slimbook-service
+  * Using dbus on client in order to show window as tray is no longer there
+
+ -- Slimbook <dev@slimbook.es>  Tue, 16 Jun 2026 16:43:00 +0200
+
 slimbook-controlpanel (0.10.0) resolute; urgency=medium
 
   * Using sensor labels as a more robust way to match a sensor (hwmon* are not deterministic between boots)
