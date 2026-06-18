@@ -33,7 +33,7 @@
             {
                 "objectName" : "Value",
                 "col" : 0,
-                "row" : 2,
+                "row" : 1,
                 "sensor": "ram.usage",
                 "label" : "Ram",
                 "unit" : "%",

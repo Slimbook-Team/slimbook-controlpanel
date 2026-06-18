@@ -170,6 +170,7 @@ QQC2.Pane {
                 console.log(bridge.slimbookFamily);
 
                 main.config = bridge.loadConfig();
+                var defaultConfig = undefined;
 
                 if (main.config === undefined) {
                     var config = bridge.loadDefaults();
@@ -177,7 +178,6 @@ QQC2.Pane {
                     for (var n=0;n<config.length;n++) {
 
                         var match = false;
-                        var defaultConfig = undefined;
 
                         switch (config[n].match.mode) {
                             case "dmi":
