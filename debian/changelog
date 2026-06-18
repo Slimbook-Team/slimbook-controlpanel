@@ -1,3 +1,9 @@
+slimbook-controlpanel (0.12.0) resolute; urgency=medium
+
+  * Fixed default template not being loaded
+
+ -- Slimbook <dev@slimbook.es>  Thu, 18 Jun 2026 14:16:26 +0200
+
 slimbook-controlpanel (0.11.0) resolute; urgency=medium
 
   * No longer using tray, it will (for a time) co-exists with slimbook-service
