@@ -335,6 +335,40 @@ QQC2.Pane {
                     columns: 4
                     rows: 4
                     Layout.alignment: Qt.AlignHCenter
+
+                    function recompute(target)
+                    {
+                        console.log("recomputing...");
+                        var gw = width / columns;
+                        var gh = height / rows;
+
+                        gw = Math.floor(gw);
+                        gh = Math.floor(gh);
+
+                        var tc = target.x / gw;
+                        var tr = target.y / gh;
+
+                        tc = Math.floor(tc);
+                        tr = Math.floor(tr);
+
+                        console.log("target "+tc+","+tr);
+
+                        var available = true;
+
+                        for (var n=0;n<children.length;n++) {
+                            //console.log(children[n].Layout.column + "/" + children[n].Layout.row);
+                            if (children[n] != target) {
+                                if (children[n].Layout.column == tc && children[n].Layout.row == tr) {
+                                    available = false;
+                                }
+                            }
+                        }
+
+                        if (available) {
+                            target.Layout.column = tc;
+                            target.Layout.row = tr;
+                        }
+                    }
                     
                 }
 

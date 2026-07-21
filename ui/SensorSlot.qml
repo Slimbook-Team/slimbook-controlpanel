@@ -23,5 +23,21 @@ Item {
             updated();
         }
     }
+
+    MouseArea {
+        anchors.fill:sensorSlot
+        drag.target: sensorSlot
+
+        drag.onActiveChanged:{
+            if (drag.active) {
+
+            }
+            else {
+                //console.log("dropped at "+sensorSlot.x+","+sensorSlot.y);
+                sensorSlot.parent.recompute(sensorSlot);
+            }
+        }
+    }
+
 }
 
