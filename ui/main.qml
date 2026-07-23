@@ -338,6 +338,9 @@ QQC2.Pane {
 
                     function recompute(target)
                     {
+                        var source_row = target.Layout.row;
+                        var source_column = target.Layout.column;
+
                         console.log("recomputing...");
                         var gw = width / columns;
                         var gh = height / rows;
@@ -367,6 +370,12 @@ QQC2.Pane {
                         if (available) {
                             target.Layout.column = tc;
                             target.Layout.row = tr;
+                        }
+                        else {
+                            target.Layout.column = 0;
+                            target.Layout.column = source_column;
+                            target.Layout.row = 0;
+                            target.Layout.row = source_row;
                         }
                     }
                     
