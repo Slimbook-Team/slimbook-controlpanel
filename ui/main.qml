@@ -36,6 +36,45 @@ QQC2.Pane {
         }
     }
 
+    function updateLayout() {
+        var items = [];
+
+        for (var n=0;n<container.children.length;n++) {
+            var item = container.children[n];
+
+            var properties = [];
+
+            if (item.objectName == "Value") {
+                properties = ["objectName","row","col","sensor","label","unit","warning","critical","minimum","maximum"];
+            }
+            else if (item.objectName == "MultiValue") {
+                properties = ["objectName","row","col","sensor","label","unit","warning","critical","minimum","maximum"];
+            }
+            else {
+                properties = ["objectName","row","col"];
+            }
+
+            if (properties.length > 0) {
+                var nitem = {};
+                console.log("item "+item.objectName);
+                for (let prop of properties) {
+                    if (item[prop] === undefined || item[prop] == Infinity || item[prop] == -Infinity) {
+                        continue;
+                    }
+                    nitem[prop] = item[prop];
+                    console.log("* " + prop + "=" + item[prop]);
+                }
+
+                items.push(nitem);
+            }
+
+            properties = [];
+        }
+
+        main.config["layout"] = items;
+        bridge.saveConfig(main.config);
+    }
+
     Connections {
         target: bridge
 
@@ -268,7 +307,7 @@ QQC2.Pane {
 
                     if (item.objectName == "SystemProfile") {
                         var component = Qt.createComponent("SystemProfile.qml");
-                        var o = component.createObject(container,{});
+                        var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
                         o.Layout.column = item.col;
@@ -276,7 +315,7 @@ QQC2.Pane {
 
                     if (item.objectName == "CpuInfo") {
                         var component = Qt.createComponent("CpuInfo.qml");
-                        var o = component.createObject(container,{});
+                        var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
                         o.Layout.column = item.col;
@@ -284,7 +323,7 @@ QQC2.Pane {
 
                     if (item.objectName == "SlimbookProfile") {
                         var component = Qt.createComponent("SlimbookProfile.qml");
-                        var o = component.createObject(container,{});
+                        var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
                         o.Layout.column = item.col;
@@ -292,7 +331,7 @@ QQC2.Pane {
 
                     if (item.objectName == "TDP") {
                         var component = Qt.createComponent("TDP.qml");
-                        var o = component.createObject(container,{});
+                        var o = component.createObject(container,item);
 
                         o.Layout.row = item.row;
                         o.Layout.column = item.col;
@@ -370,6 +409,10 @@ QQC2.Pane {
                         if (available) {
                             target.Layout.column = tc;
                             target.Layout.row = tr;
+                            target.col = target.Layout.column;
+                            target.row = target.Layout.row;
+
+                            main.updateLayout();
                         }
                         else {
                             target.Layout.column = 0;
