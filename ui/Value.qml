@@ -17,10 +17,10 @@ SensorSlot {
     property double minimum: -Infinity
     property double maximum: Infinity
 
-    width: 128
-    height: 128
-    property int col : 0
-    property int row : 0
+    //width: 128
+    //height: 128
+    //property int col : 0
+    //property int row : 0
 
     onUpdated: {
         graph.push(value);

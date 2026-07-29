@@ -4,6 +4,7 @@
     <file>default.json</file>
     <file>ui/qmldir</file>
     <file>ui/Palette.qml</file>
+    <file>ui/Slot.qml</file>
     <file>ui/SensorSlot.qml</file>
     <file>ui/Value.qml</file>
     <file>ui/MultiValue.qml</file>

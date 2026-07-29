@@ -7,13 +7,15 @@ import "." as UI
 import QtQuick
 import QtQuick.Layouts
 
-Item {
+Slot {
     objectName: "TDP"
+
+    /*
     width: 128
     height: 128
     property int col : 0
     property int row : 0
-    
+    */
     property double stapm: 0.0
     
     Component.onCompleted: {

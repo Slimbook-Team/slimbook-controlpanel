@@ -5,28 +5,19 @@
 import QtQuick
 import QtQuick.Controls as QQC2
 
-Slot {
-    id: sensorSlot
-    objectName: "sensorSlot"
+Item {
+    id: root
 
-    property string sensor : ""
-    property double value : 0.0
-    
-    signal updated();
+    objectName: "Slot"
+    width: 128
+    height: 128
 
-    Connections {
-        target: bridge
+    property int col : 0
+    property int row : 0
 
-        function onSensorsUpdated()
-        {
-            sensorSlot.value = bridge.readSensor(sensorSlot.sensor);
-            updated();
-        }
-    }
-/*
     MouseArea {
-        anchors.fill:sensorSlot
-        drag.target: sensorSlot
+        anchors.fill:root
+        drag.target: root
 
         drag.onActiveChanged:{
             if (drag.active) {
@@ -34,10 +25,8 @@ Slot {
             }
             else {
                 //console.log("dropped at "+sensorSlot.x+","+sensorSlot.y);
-                sensorSlot.parent.recompute(sensorSlot);
+                root.parent.recompute(root);
             }
         }
     }
-    */
 }
-

@@ -7,7 +7,7 @@ import "." as UI
 import QtQuick
 import QtQuick.Layouts
 
-Item {
+Slot {
     objectName: "MultiValue"
 
     property string sensor : ""
@@ -20,10 +20,12 @@ Item {
     property double minimum: 0
     property double maximum: 100000.0
 
+    /*
     width: 128
     height: 128
     property int col : 0
     property int row : 0
+    */
 
     Connections {
         target: bridge
