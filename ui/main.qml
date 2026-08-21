@@ -397,11 +397,16 @@ QQC2.Pane {
 
                         var available = true;
 
-                        for (var n=0;n<children.length;n++) {
-                            //console.log(children[n].Layout.column + "/" + children[n].Layout.row);
-                            if (children[n] != target) {
-                                if (children[n].Layout.column == tc && children[n].Layout.row == tr) {
-                                    available = false;
+                        if (tr < 0 || tc < 0 || tr >= container.rows || tc >= container.columns) {
+                            available = false;
+                        }
+                        else {
+                            for (var n=0;n<children.length;n++) {
+                                //console.log(children[n].Layout.column + "/" + children[n].Layout.row);
+                                if (children[n] != target) {
+                                    if (children[n].Layout.column == tc && children[n].Layout.row == tr) {
+                                        available = false;
+                                    }
                                 }
                             }
                         }
