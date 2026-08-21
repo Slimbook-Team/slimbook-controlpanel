@@ -357,6 +357,18 @@ QQC2.Pane {
                 }
             }
 
+            QQC2.Menu {
+                id: contextSlotMenu
+
+                QQC2.MenuItem {
+                    text: "Delete"
+                }
+
+                QQC2.MenuItem {
+                    text: "Configure"
+                }
+            }
+
             ColumnLayout {
                 anchors.fill:parent
 
@@ -374,6 +386,11 @@ QQC2.Pane {
                     columns: 4
                     rows: 4
                     Layout.alignment: Qt.AlignHCenter
+
+                    function menu(target)
+                    {
+                        contextSlotMenu.open();
+                    }
 
                     function recompute(target)
                     {

@@ -18,6 +18,7 @@ Item {
     MouseArea {
         anchors.fill:root
         drag.target: root
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         drag.onActiveChanged:{
             if (drag.active) {
@@ -26,6 +27,13 @@ Item {
             else {
                 //console.log("dropped at "+sensorSlot.x+","+sensorSlot.y);
                 root.parent.recompute(root);
+            }
+        }
+
+        onClicked: (mouse) => {
+            if (mouse.button == Qt.RightButton) {
+                console.log("I am " + root.objectName);
+                root.parent.menu(root);
             }
         }
     }
