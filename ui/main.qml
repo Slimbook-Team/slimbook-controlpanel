@@ -359,14 +359,30 @@ QQC2.Pane {
 
             QQC2.Menu {
                 id: contextSlotMenu
+                property var target: null
 
                 QQC2.MenuItem {
                     text: "Delete"
+
+                    onTriggered: {
+                        console.log(contextSlotMenu.target.objectName);
+                        contextSlotMenu.target.destroy();
+                        contextSlotMenu.target = null;
+                    }
                 }
 
                 QQC2.MenuItem {
                     text: "Configure"
                 }
+            }
+
+            QQC2.Menu {
+                id: contextSlotAddMenu
+
+                QQC2.MenuItem {
+                    text: "Add"
+                }
+
             }
 
             ColumnLayout {
@@ -380,70 +396,91 @@ QQC2.Pane {
                     Layout.alignment: Qt.AlignHCenter
                 }
 
-                
-                GridLayout {
-                    id: container
-                    columns: 4
-                    rows: 4
+                Item {
                     Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
 
-                    function menu(target)
-                    {
-                        contextSlotMenu.open();
-                    }
+                    /* container */
+                    GridLayout {
+                        id: container
+                        columns: 4
+                        rows: 4
+                        //Layout.alignment: Qt.AlignHCenter
+                        anchors.centerIn:parent
 
-                    function recompute(target)
-                    {
-                        var source_row = target.Layout.row;
-                        var source_column = target.Layout.column;
-
-                        console.log("recomputing...");
-                        var gw = width / columns;
-                        var gh = height / rows;
-
-                        gw = Math.floor(gw);
-                        gh = Math.floor(gh);
-
-                        var tc = target.x / gw;
-                        var tr = target.y / gh;
-
-                        tc = Math.floor(tc);
-                        tr = Math.floor(tr);
-
-                        console.log("target "+tc+","+tr);
-
-                        var available = true;
-
-                        if (tr < 0 || tc < 0 || tr >= container.rows || tc >= container.columns) {
-                            available = false;
+                        function menu(target,x,y)
+                        {
+                            console.log(target.objectName);
+                            var point = dashboard.mapFromItem(target,x,y);
+                            contextSlotMenu.x = point.x;
+                            contextSlotMenu.y = point.y;
+                            contextSlotMenu.target = target;
+                            contextSlotMenu.open();
                         }
-                        else {
-                            for (var n=0;n<children.length;n++) {
-                                //console.log(children[n].Layout.column + "/" + children[n].Layout.row);
-                                if (children[n] != target) {
-                                    if (children[n].Layout.column == tc && children[n].Layout.row == tr) {
-                                        available = false;
+
+                        function recompute(target)
+                        {
+                            var source_row = target.Layout.row;
+                            var source_column = target.Layout.column;
+
+                            console.log("recomputing...");
+                            var gw = width / columns;
+                            var gh = height / rows;
+
+                            gw = Math.floor(gw);
+                            gh = Math.floor(gh);
+
+                            var tc = target.x / gw;
+                            var tr = target.y / gh;
+
+                            tc = Math.floor(tc);
+                            tr = Math.floor(tr);
+
+                            console.log("target "+tc+","+tr);
+
+                            var available = true;
+
+                            if (tr == -1) {
+                                tr = 0;
+                            }
+
+                            if (tc == -1) {
+                                tc = 0;
+                            }
+
+                            if (tr < 0 || tc < 0 || tr >= container.rows || tc >= container.columns) {
+                                available = false;
+                            }
+                            else {
+                                for (var n=0;n<children.length;n++) {
+                                    //console.log(children[n].Layout.column + "/" + children[n].Layout.row);
+                                    if (children[n] != target) {
+                                        if (children[n].Layout.column == tc && children[n].Layout.row == tr) {
+                                            available = false;
+                                        }
                                     }
                                 }
                             }
+
+                            if (available) {
+                                target.Layout.column = tc;
+                                target.Layout.row = tr;
+                                target.col = target.Layout.column;
+                                target.row = target.Layout.row;
+
+                                main.updateLayout();
+                            }
+                            else {
+                                target.Layout.column = 0;
+                                target.Layout.column = source_column;
+                                target.Layout.row = 0;
+                                target.Layout.row = source_row;
+                            }
                         }
 
-                        if (available) {
-                            target.Layout.column = tc;
-                            target.Layout.row = tr;
-                            target.col = target.Layout.column;
-                            target.row = target.Layout.row;
-
-                            main.updateLayout();
-                        }
-                        else {
-                            target.Layout.column = 0;
-                            target.Layout.column = source_column;
-                            target.Layout.row = 0;
-                            target.Layout.row = source_row;
-                        }
                     }
-                    
+                    /* container */
                 }
 
                 QQC2.Label {

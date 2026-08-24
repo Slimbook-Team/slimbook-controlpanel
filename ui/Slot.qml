@@ -32,8 +32,7 @@ Item {
 
         onClicked: (mouse) => {
             if (mouse.button == Qt.RightButton) {
-                console.log("I am " + root.objectName);
-                root.parent.menu(root);
+                root.parent.menu(root,mouse.x,mouse.y);
             }
         }
     }
