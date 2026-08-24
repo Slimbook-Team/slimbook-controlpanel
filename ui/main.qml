@@ -938,6 +938,7 @@ QQC2.Pane {
                 spacing: 2
 
                 delegate: Rectangle {
+                    color: "transparent"
                     radius: 4
                     border.width: 1
                     border.color: UI.Palette.base
