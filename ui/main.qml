@@ -357,6 +357,30 @@ QQC2.Pane {
                 }
             }
 
+            QQC2.Dialog {
+                id: dialogConfig
+                property var target: null
+                title: "Configuration"
+                standardButtons: QQC2.Dialog.Ok | QQC2.Dialog.Cancel
+                modal: true
+                width: 500
+                height: 400
+
+                onOpened: {
+                    console.log("dialog is ready");
+                    console.log("configuring a "+target.objectName);
+
+                    dialogConfig.contentItem.children = [];
+
+                    var component = Qt.createComponent(target.objectName+"Config.qml");
+                    var o = component.createObject(dialogConfig.contentItem,{target:target});
+
+                }
+
+                onAccepted: console.log("Ok clicked")
+                onRejected: console.log("Cancel clicked")
+            }
+
             QQC2.Menu {
                 id: contextSlotMenu
                 property var target: null
@@ -373,6 +397,13 @@ QQC2.Pane {
 
                 QQC2.MenuItem {
                     text: "Configure"
+
+                    onTriggered: {
+                        if (contextSlotMenu.target.objectName == "Value") {
+                            dialogConfig.target = contextSlotMenu.target;
+                            dialogConfig.open();
+                        }
+                    }
                 }
             }
 
