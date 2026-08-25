@@ -62,7 +62,7 @@ QQC2.Pane {
                         continue;
                     }
                     nitem[prop] = item[prop];
-                    console.log("* " + prop + "=" + item[prop]);
+                    //console.log("* " + prop + "=" + item[prop]);
                 }
 
                 items.push(nitem);
@@ -280,7 +280,17 @@ QQC2.Pane {
                     main.width = main.config.window.width;
                     main.height = main.config.window.height;
                 }
-
+                
+                if (main.config.columns !== undefined) {
+                    main.config.columns = container.columns;
+                }
+                
+                if (main.config.rows !== undefined) {
+                    main.config.rows = container.rows;
+                }
+                
+                console.log("Layout size "+main.config.columns+"x"+main.config.rows);
+                
                 for (var i=0;i<main.config.layout.length;i++) {
                     var item = main.config.layout[i];
                     console.log("item " + item.objectName);
@@ -365,6 +375,7 @@ QQC2.Pane {
                 modal: true
                 width: 500
                 height: 400
+                anchors.centerIn: parent
 
                 onOpened: {
                     console.log("dialog is ready");
@@ -435,8 +446,8 @@ QQC2.Pane {
                     /* container */
                     GridLayout {
                         id: container
-                        columns: 4
-                        rows: 4
+                        columns: main.config.columns
+                        rows: main.config.rows
                         //Layout.alignment: Qt.AlignHCenter
                         anchors.centerIn:parent
 
@@ -458,6 +469,8 @@ QQC2.Pane {
                             console.log("recomputing...");
                             var gw = width / columns;
                             var gh = height / rows;
+                            
+                            console.log("grid size "+columns+"x"+rows);
 
                             gw = Math.floor(gw);
                             gh = Math.floor(gh);
@@ -481,6 +494,7 @@ QQC2.Pane {
                             }
 
                             if (tr < 0 || tc < 0 || tr >= container.rows || tc >= container.columns) {
+                                console.log("Out of bounds");
                                 available = false;
                             }
                             else {
@@ -488,6 +502,7 @@ QQC2.Pane {
                                     //console.log(children[n].Layout.column + "/" + children[n].Layout.row);
                                     if (children[n] != target) {
                                         if (children[n].Layout.column == tc && children[n].Layout.row == tr) {
+                                            console.log("Place already occupied by "+children[n].objectName);
                                             available = false;
                                         }
                                     }
@@ -495,6 +510,7 @@ QQC2.Pane {
                             }
 
                             if (available) {
+                                console.log("moving...");
                                 target.Layout.column = tc;
                                 target.Layout.row = tr;
                                 target.col = target.Layout.column;

@@ -362,7 +362,8 @@
             "model" : 131074
         },
         "logo":"qrc:/images/models/creative.svg",
-        "rows" : 4,
+        "rows" : 5,
+        "columns" : 4,
         "sample-rate" : 1.0,
         "layout" : [
             {
