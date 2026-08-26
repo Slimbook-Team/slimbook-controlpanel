@@ -14,6 +14,7 @@
     <file>ui/SlimbookProfile.qml</file>
     <file>ui/TDP.qml</file>
     <file>ui/Graph.qml</file>
+    <file>ui/Badge.qml</file>
     <file>images/power-saver.svg</file>
     <file>images/balanced.svg</file>
     <file>images/performance.svg</file>
@@ -36,5 +37,7 @@
 
     <file>images/tray-base.svg</file>
     <file>images/tray-base-light.svg</file>
+
+    <file>images/badges/stripes.svg</file>
 </qresource>
 </RCC>

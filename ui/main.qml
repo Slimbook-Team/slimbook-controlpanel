@@ -347,6 +347,14 @@ QQC2.Pane {
                         o.Layout.column = item.col;
                     }
 
+                    if (item.objectName == "Badge") {
+                        var component = Qt.createComponent("Badge.qml");
+                        var o = component.createObject(container,item);
+
+                        o.Layout.row = item.row;
+                        o.Layout.column = item.col;
+                    }
+
                 }
 
                 console.log(bridge.getCPUName());
@@ -421,38 +429,41 @@ QQC2.Pane {
             QQC2.Menu {
                 id: contextSlotAddMenu
 
-                    QQC2.Menu {
-                        title: "Add"
+                QQC2.Menu {
+                    title: "Add"
 
-                        QQC2.MenuItem {
-                            text: "Value"
-                        }
-
-                        QQC2.MenuItem {
-                            text: "Multi Value"
-                        }
-
-                        QQC2.MenuItem {
-                            text: "System Profile"
-                        }
-
-                        QQC2.MenuItem {
-                            text: "Slimbook Profile"
-                        }
-
-                        QQC2.MenuItem {
-                            text: "CPU Info"
-                        }
-
-                        QQC2.MenuItem {
-                            text: "TDP"
-                        }
-
-                        QQC2.MenuItem {
-                            text: "Badge"
-                        }
+                    QQC2.MenuItem {
+                        text: "Value"
                     }
 
+                    QQC2.MenuItem {
+                        text: "Multi Value"
+                    }
+
+                    QQC2.MenuItem {
+                        text: "System Profile"
+                    }
+
+                    QQC2.MenuItem {
+                        text: "Slimbook Profile"
+                    }
+
+                    QQC2.MenuItem {
+                        text: "CPU Info"
+                    }
+
+                    QQC2.MenuItem {
+                        text: "TDP"
+                    }
+
+                    QQC2.MenuItem {
+                        text: "Badge"
+
+                        onTriggered: {
+
+                        }
+                    }
+                }
             }
 
             ColumnLayout {
@@ -471,9 +482,22 @@ QQC2.Pane {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
+                    Rectangle {
+                        anchors.fill:containerMouseArea
+                        border.color: "#3e3e3e"
+                        border.width: 1
+                        color: "transparent"
+                    }
+
                     MouseArea {
                         id: containerMouseArea
-                        anchors.fill:parent
+                        //anchors.fill:container
+                        x:container.x
+                        y:container.y
+                        width: (container.columns * 128) + (container.columnSpacing * (container.columns - 1))
+                        height: (container.rows * 128) + (container.rowSpacing * (container.rows - 1))
+
+
                         acceptedButtons: Qt.RightButton
 
                         onClicked: (mouse) => {
@@ -481,6 +505,22 @@ QQC2.Pane {
                                 var point = dashboard.mapFromItem(containerMouseArea ,mouse.x,mouse.y);
                                 contextSlotAddMenu.x = point.x;
                                 contextSlotAddMenu.y = point.y;
+
+                                var gw = width / container.columns;
+                                var gh = height / container.rows;
+
+                                console.log("grid size "+container.columns+"x"+container.rows);
+
+                                gw = Math.floor(gw);
+                                gh = Math.floor(gh);
+
+                                var tc = mouse.x / gw;
+                                var tr = mouse.y / gh;
+
+                                tc = Math.floor(tc);
+                                tr = Math.floor(tr);
+
+                                console.log("target "+tc+","+tr);
 
                                 contextSlotAddMenu.open();
                             }
@@ -494,6 +534,10 @@ QQC2.Pane {
                         rows: main.config.rows
                         //Layout.alignment: Qt.AlignHCenter
                         anchors.centerIn:parent
+                        rowSpacing: 4
+                        columnSpacing:4
+                        //width: (columns * 128) + (columnSpacing * (columns - 1))
+                        //height: (rows * 128) + (rowSpacing * (rows - 1))
 
                         function menu(target,x,y)
                         {
