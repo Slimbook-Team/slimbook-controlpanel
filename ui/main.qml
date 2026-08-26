@@ -421,9 +421,37 @@ QQC2.Pane {
             QQC2.Menu {
                 id: contextSlotAddMenu
 
-                QQC2.MenuItem {
-                    text: "Add"
-                }
+                    QQC2.Menu {
+                        title: "Add"
+
+                        QQC2.MenuItem {
+                            text: "Value"
+                        }
+
+                        QQC2.MenuItem {
+                            text: "Multi Value"
+                        }
+
+                        QQC2.MenuItem {
+                            text: "System Profile"
+                        }
+
+                        QQC2.MenuItem {
+                            text: "Slimbook Profile"
+                        }
+
+                        QQC2.MenuItem {
+                            text: "CPU Info"
+                        }
+
+                        QQC2.MenuItem {
+                            text: "TDP"
+                        }
+
+                        QQC2.MenuItem {
+                            text: "Badge"
+                        }
+                    }
 
             }
 
@@ -442,6 +470,22 @@ QQC2.Pane {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+
+                    MouseArea {
+                        id: containerMouseArea
+                        anchors.fill:parent
+                        acceptedButtons: Qt.RightButton
+
+                        onClicked: (mouse) => {
+                            if (mouse.button == Qt.RightButton) {
+                                var point = dashboard.mapFromItem(containerMouseArea ,mouse.x,mouse.y);
+                                contextSlotAddMenu.x = point.x;
+                                contextSlotAddMenu.y = point.y;
+
+                                contextSlotAddMenu.open();
+                            }
+                        }
+                    }
 
                     /* container */
                     GridLayout {
