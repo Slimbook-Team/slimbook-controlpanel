@@ -56,7 +56,7 @@ QQC2.Pane {
 
             if (properties.length > 0) {
                 var nitem = {};
-                console.log("item "+item.objectName);
+                //console.log("item "+item.objectName);
                 for (let prop of properties) {
                     if (item[prop] === undefined || item[prop] == Infinity || item[prop] == -Infinity) {
                         continue;
@@ -428,6 +428,8 @@ QQC2.Pane {
 
             QQC2.Menu {
                 id: contextSlotAddMenu
+                property int targetColumn:0
+                property int targetRow:0
 
                 QQC2.Menu {
                     title: "Add"
@@ -460,7 +462,10 @@ QQC2.Pane {
                         text: "Badge"
 
                         onTriggered: {
-
+                            var component = Qt.createComponent("Badge.qml");
+                            var o = component.createObject(container);
+                            o.Layout.row = contextSlotAddMenu.targetRow;
+                            o.Layout.column = contextSlotAddMenu.targetColumn;
                         }
                     }
                 }
@@ -482,15 +487,56 @@ QQC2.Pane {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
-                    Rectangle {
-                        anchors.fill:containerMouseArea
-                        border.color: "#3e3e3e"
-                        border.width: 1
-                        color: "transparent"
+                    Canvas {
+                        anchors.fill:containerArea
+
+                        onPaint: {
+                            var ctx = getContext("2d");
+                            var dynamicRange = true;
+
+                            ctx.clearRect(0,0,width,height);
+
+                            ctx.strokeStyle = UI.Palette.base
+
+                            ctx.beginPath();
+
+                            ctx.moveTo(0,0);
+                            ctx.lineTo(width,0);
+                            ctx.lineTo(width,height);
+                            ctx.lineTo(0,height);
+                            ctx.lineTo(0,0);
+
+                            ctx.closePath();
+                            ctx.stroke();
+
+                            var cw = 128;
+                            for (var n = 1;n<container.columns; n++) {
+                                cw = cw + container.columnSpacing/2;
+
+                                ctx.beginPath();
+                                ctx.moveTo(cw ,0);
+                                ctx.lineTo(cw ,height);
+                                ctx.closePath();
+                                ctx.stroke();
+                                cw = 128 + cw + container.columnSpacing/2;
+                            }
+
+                            var rw = 128;
+                            for (var n = 0;n<container.rows; n++) {
+                                rw = rw + container.rowSpacing/2;
+                                ctx.beginPath();
+                                ctx.moveTo(0,rw);
+                                ctx.lineTo(width,rw);
+                                ctx.closePath();
+                                ctx.stroke();
+                                rw = 128 + rw + container.rowSpacing/2;
+                            }
+
+                        }
                     }
 
                     MouseArea {
-                        id: containerMouseArea
+                        id: containerArea
                         //anchors.fill:container
                         x:container.x
                         y:container.y
@@ -502,7 +548,7 @@ QQC2.Pane {
 
                         onClicked: (mouse) => {
                             if (mouse.button == Qt.RightButton) {
-                                var point = dashboard.mapFromItem(containerMouseArea ,mouse.x,mouse.y);
+                                var point = dashboard.mapFromItem(containerArea ,mouse.x,mouse.y);
                                 contextSlotAddMenu.x = point.x;
                                 contextSlotAddMenu.y = point.y;
 
@@ -522,6 +568,8 @@ QQC2.Pane {
 
                                 console.log("target "+tc+","+tr);
 
+                                contextSlotAddMenu.targetColumn = tc;
+                                contextSlotAddMenu.targetRow = tr;
                                 contextSlotAddMenu.open();
                             }
                         }
@@ -555,8 +603,8 @@ QQC2.Pane {
                             var source_column = target.Layout.column;
 
                             console.log("recomputing...");
-                            var gw = width / columns;
-                            var gh = height / rows;
+                            var gw = containerArea.width / columns;
+                            var gh = containerArea.height / rows;
                             
                             console.log("grid size "+columns+"x"+rows);
 
