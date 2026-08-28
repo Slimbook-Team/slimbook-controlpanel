@@ -14,6 +14,8 @@ Item {
 
     property int col : 0
     property int row : 0
+    
+    signal clicked()
 
     MouseArea {
         anchors.fill:root
@@ -33,6 +35,10 @@ Item {
         onClicked: (mouse) => {
             if (mouse.button == Qt.RightButton) {
                 root.parent.menu(root,mouse.x,mouse.y);
+            }
+            
+            if (mouse.button == Qt.LeftButton) {
+                root.clicked();
             }
         }
     }

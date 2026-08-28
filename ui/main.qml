@@ -50,13 +50,16 @@ QQC2.Pane {
             else if (item.objectName == "MultiValue") {
                 properties = ["objectName","row","col","sensor","label","unit","warning","critical","minimum","maximum"];
             }
+            else if (item.objectName == "Badge") {
+                properties = ["objectName","row","col","source"];
+            }
             else {
                 properties = ["objectName","row","col"];
             }
 
             if (properties.length > 0) {
                 var nitem = {};
-                //console.log("item "+item.objectName);
+                console.log("item "+item.objectName);
                 for (let prop of properties) {
                     if (item[prop] === undefined || item[prop] == Infinity || item[prop] == -Infinity) {
                         continue;
@@ -411,6 +414,8 @@ QQC2.Pane {
                         console.log(contextSlotMenu.target.objectName);
                         contextSlotMenu.target.destroy();
                         contextSlotMenu.target = null;
+                        
+                        main.updateLayout();
                     }
                 }
 
@@ -466,6 +471,8 @@ QQC2.Pane {
                             var o = component.createObject(container);
                             o.Layout.row = contextSlotAddMenu.targetRow;
                             o.Layout.column = contextSlotAddMenu.targetColumn;
+                            
+                            main.updateLayout();
                         }
                     }
                 }
@@ -492,44 +499,45 @@ QQC2.Pane {
 
                         onPaint: {
                             var ctx = getContext("2d");
-                            var dynamicRange = true;
 
                             ctx.clearRect(0,0,width,height);
 
                             ctx.strokeStyle = UI.Palette.base
 
-                            ctx.beginPath();
-
-                            ctx.moveTo(0,0);
-                            ctx.lineTo(width,0);
-                            ctx.lineTo(width,height);
-                            ctx.lineTo(0,height);
-                            ctx.lineTo(0,0);
-
-                            ctx.closePath();
-                            ctx.stroke();
-
-                            var cw = 128;
-                            for (var n = 1;n<container.columns; n++) {
-                                cw = cw + container.columnSpacing/2;
-
+                            if (containerArea.showGrids) {
                                 ctx.beginPath();
-                                ctx.moveTo(cw ,0);
-                                ctx.lineTo(cw ,height);
+
+                                ctx.moveTo(0,0);
+                                ctx.lineTo(width,0);
+                                ctx.lineTo(width,height);
+                                ctx.lineTo(0,height);
+                                ctx.lineTo(0,0);
+
                                 ctx.closePath();
                                 ctx.stroke();
-                                cw = 128 + cw + container.columnSpacing/2;
-                            }
 
-                            var rw = 128;
-                            for (var n = 0;n<container.rows; n++) {
-                                rw = rw + container.rowSpacing/2;
-                                ctx.beginPath();
-                                ctx.moveTo(0,rw);
-                                ctx.lineTo(width,rw);
-                                ctx.closePath();
-                                ctx.stroke();
-                                rw = 128 + rw + container.rowSpacing/2;
+                                var cw = 128;
+                                for (var n = 1;n<container.columns; n++) {
+                                    cw = cw + container.columnSpacing/2;
+
+                                    ctx.beginPath();
+                                    ctx.moveTo(cw ,0);
+                                    ctx.lineTo(cw ,height);
+                                    ctx.closePath();
+                                    ctx.stroke();
+                                    cw = 128 + cw + container.columnSpacing/2;
+                                }
+
+                                var rw = 128;
+                                for (var n = 0;n<container.rows; n++) {
+                                    rw = rw + container.rowSpacing/2;
+                                    ctx.beginPath();
+                                    ctx.moveTo(0,rw);
+                                    ctx.lineTo(width,rw);
+                                    ctx.closePath();
+                                    ctx.stroke();
+                                    rw = 128 + rw + container.rowSpacing/2;
+                                }
                             }
 
                         }
@@ -538,6 +546,8 @@ QQC2.Pane {
                     MouseArea {
                         id: containerArea
                         //anchors.fill:container
+                        property bool showGrids: true
+                        
                         x:container.x
                         y:container.y
                         width: (container.columns * 128) + (container.columnSpacing * (container.columns - 1))
@@ -548,6 +558,8 @@ QQC2.Pane {
 
                         onClicked: (mouse) => {
                             if (mouse.button == Qt.RightButton) {
+                                containerArea.showGrids = true;
+                                
                                 var point = dashboard.mapFromItem(containerArea ,mouse.x,mouse.y);
                                 contextSlotAddMenu.x = point.x;
                                 contextSlotAddMenu.y = point.y;

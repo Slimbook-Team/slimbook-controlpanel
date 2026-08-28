@@ -39,5 +39,7 @@
     <file>images/tray-base-light.svg</file>
 
     <file>images/badges/stripes.svg</file>
+    <file>images/badges/boou.svg</file>
+    <file>images/badges/tux.svg</file>
 </qresource>
 </RCC>
