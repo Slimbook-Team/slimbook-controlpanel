@@ -7,13 +7,14 @@ import "." as UI
 import QtQuick
 import QtQuick.Layouts
 
-Item {
+Slot {
     objectName: "SlimbookProfile"
+    /*
     width: 128
     height: 128
     property int col : 0
     property int row : 0
-
+    */
     Connections {
         target: bridge
 

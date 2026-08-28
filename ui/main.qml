@@ -89,7 +89,8 @@ QQC2.Pane {
     onReloadSettings: {
         console.log("Reloading settings...");
         sampleTimer.interval = main.config["sample-rate"] * 1000;
-
+        containerArea.showGrid = main.config["showGrid"];
+        console.log("grid: "+containerArea.showGrid);
         settingsReloaded();
     }
     
@@ -435,44 +436,75 @@ QQC2.Pane {
                 id: contextSlotAddMenu
                 property int targetColumn:0
                 property int targetRow:0
+                
+                function addSlot(what) {
+                    var component = Qt.createComponent(what);
+                    var o = component.createObject(container);
+                    o.col = contextSlotAddMenu.targetRow;
+                    o.row = contextSlotAddMenu.targetColumn;
+                    o.Layout.row = contextSlotAddMenu.targetRow;
+                    o.Layout.column = contextSlotAddMenu.targetColumn;
+                    
+                    main.updateLayout();
+                }
+                
 
                 QQC2.Menu {
                     title: "Add"
 
                     QQC2.MenuItem {
                         text: "Value"
+                        
+                        onTriggered: {
+                            contextSlotAddMenu.addSlot("Value.qml");
+                        }
                     }
 
                     QQC2.MenuItem {
                         text: "Multi Value"
+                        
+                        onTriggered: {
+                            contextSlotAddMenu.addSlot("MultiValue.qml");
+                        }
                     }
 
                     QQC2.MenuItem {
                         text: "System Profile"
+                        
+                        onTriggered: {
+                            contextSlotAddMenu.addSlot("SystemProfile.qml");
+                        }
                     }
 
                     QQC2.MenuItem {
                         text: "Slimbook Profile"
+                        
+                        onTriggered: {
+                            contextSlotAddMenu.addSlot("SlimbookProfile.qml");
+                        }
                     }
 
                     QQC2.MenuItem {
                         text: "CPU Info"
+                        
+                        onTriggered: {
+                            contextSlotAddMenu.addSlot("CpuInfo.qml");
+                        }
                     }
 
                     QQC2.MenuItem {
                         text: "TDP"
+                        
+                        onTriggered: {
+                            contextSlotAddMenu.addSlot("TDP.qml");
+                        }
                     }
 
                     QQC2.MenuItem {
                         text: "Badge"
 
                         onTriggered: {
-                            var component = Qt.createComponent("Badge.qml");
-                            var o = component.createObject(container);
-                            o.Layout.row = contextSlotAddMenu.targetRow;
-                            o.Layout.column = contextSlotAddMenu.targetColumn;
-                            
-                            main.updateLayout();
+                            contextSlotAddMenu.addSlot("Badge.qml");
                         }
                     }
                 }
@@ -495,7 +527,17 @@ QQC2.Pane {
                     Layout.fillHeight: true
 
                     Canvas {
+                        id: containerCanvas
                         anchors.fill:containerArea
+                        
+                        Connections {
+                            target: containerArea
+                            
+                            function onShowGridChanged() {
+                                console.log("yolo");
+                                containerCanvas.requestPaint();
+                            }
+                        }
 
                         onPaint: {
                             var ctx = getContext("2d");
@@ -504,7 +546,7 @@ QQC2.Pane {
 
                             ctx.strokeStyle = UI.Palette.base
 
-                            if (containerArea.showGrids) {
+                            if (containerArea.showGrid) {
                                 ctx.beginPath();
 
                                 ctx.moveTo(0,0);
@@ -546,7 +588,7 @@ QQC2.Pane {
                     MouseArea {
                         id: containerArea
                         //anchors.fill:container
-                        property bool showGrids: true
+                        property bool showGrid: main.config["showGrid"]
                         
                         x:container.x
                         y:container.y
@@ -558,7 +600,6 @@ QQC2.Pane {
 
                         onClicked: (mouse) => {
                             if (mouse.button == Qt.RightButton) {
-                                containerArea.showGrids = true;
                                 
                                 var point = dashboard.mapFromItem(containerArea ,mouse.x,mouse.y);
                                 contextSlotAddMenu.x = point.x;
@@ -735,6 +776,20 @@ QQC2.Pane {
                         }
                     }
                 }
+                
+                RowLayout {
+                    Layout.fillWidth: true
+                    
+                    QQC2.CheckBox {
+                        id: chkGrid
+                        checked: main.config["showGrid"]
+                        text: "Show grid"
+                        
+                        onClicked: {
+                            settings.changes = true;
+                        }
+                    }
+                }
 
                 Item {
                     Layout.fillHeight: true
@@ -754,6 +809,7 @@ QQC2.Pane {
 
                         onClicked: {
                             main.config["sample-rate"] = parseFloat(cfgSampleRate.last.replace(",","."));
+                            main.config["showGrid"] = (chkGrid.checkState == Qt.Checked);
                             settings.changes = false;
                             console.log("sample rate:",main.config["sample-rate"]);
                             main.reloadSettings();
