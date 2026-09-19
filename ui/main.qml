@@ -387,6 +387,7 @@ QQC2.Pane {
             QQC2.Dialog {
                 id: dialogConfig
                 property var target: null
+                property var config: null
                 title: "Configuration"
                 standardButtons: QQC2.Dialog.Ok | QQC2.Dialog.Cancel
                 modal: true
@@ -402,11 +403,21 @@ QQC2.Pane {
 
                     var component = Qt.createComponent(target.objectName+"Config.qml");
                     var o = component.createObject(dialogConfig.contentItem,{target:target});
+                    config = o;
+                    o.changes.connect(function () {
+                       standardButton(QQC2.Dialog.Ok).enabled = true;
+                    });
 
+                    standardButton(QQC2.Dialog.Ok).enabled = false;
                 }
 
-                onAccepted: console.log("Ok clicked")
-                onRejected: console.log("Cancel clicked")
+                onAccepted:{
+                    config.save();
+                }
+
+                onRejected: {
+
+                }
             }
 
             QQC2.Menu {

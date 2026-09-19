@@ -2,14 +2,24 @@
 // SPDX-FileCopyrightText: 2026 Slimbook development team <dev@slimbook.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import "." as UI
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 
-Item {
+UI.SlotConfig {
     id: config
-    property var target: undefined
     anchors.fill: parent
+
+    onSave: {
+        config.target.label = txtLabel.text;
+        config.target.unit = txtUnit.text;
+    }
+
+    ListModel {
+        id: tableModel
+    }
 
     GridLayout {
         QQC2.Label {
@@ -20,10 +30,15 @@ Item {
         }
 
         QQC2.TextField {
+            id: txtLabel
             Layout.row: 0
             Layout.column: 1
 
             text: config.target.label
+
+            onTextEdited: {
+                config.changes();
+            }
         }
 
         QQC2.Label {
@@ -34,10 +49,15 @@ Item {
         }
 
         QQC2.TextField {
+            id: txtUnit
             Layout.row: 1
             Layout.column: 1
 
             text: config.target.unit
+
+            onTextEdited: {
+                config.changes();
+            }
         }
 
         QQC2.Label {
@@ -47,11 +67,33 @@ Item {
             text: "Sensor"
         }
 
-        QQC2.TextField {
+        QQC2.ComboBox {
+            id: cmbSensor
             Layout.row: 2
             Layout.column: 1
 
-            text: config.target.sensor
+            model: tableModel
+            textRole: "label"
+
+            Component.onCompleted: {
+                for (var item in bridge.sensorList) {
+                    var sensorName = bridge.sensorList[item];
+                    var sensorLabel = bridge.getSensorLabel(sensorName);
+
+                    tableModel.append(
+                        {
+                            sensor: (sensorLabel.length > 0) ? "label:" + sensorLabel : sensorName,
+                            label: (sensorLabel.length > 0) ? sensorLabel : sensorName
+                        });
+                }
+
+                /* this has some room for improvement */
+                cmbSensor.displayText = config.target.sensor.replace("label:","");
+            }
+
+            onActivated: {
+                config.changes();
+            }
         }
 
         QQC2.Label {
@@ -66,6 +108,15 @@ Item {
             Layout.column: 1
 
             text: config.target.warning
+
+            onTextEdited: {
+                config.changes();
+            }
+
+            validator: DoubleValidator {
+                decimals: 4
+                notation: DoubleValidator.StandardNotation
+            }
         }
 
         QQC2.Label {
@@ -80,6 +131,15 @@ Item {
             Layout.column: 1
 
             text: config.target.critical
+
+            onTextEdited: {
+                config.changes();
+            }
+
+            validator: DoubleValidator {
+                decimals: 4
+                notation: DoubleValidator.StandardNotation
+            }
         }
 
         QQC2.Label {
@@ -94,6 +154,15 @@ Item {
             Layout.column: 1
 
             text: config.target.minimum
+
+            onTextEdited: {
+                config.changes();
+            }
+
+            validator: DoubleValidator {
+                decimals: 4
+                notation: DoubleValidator.StandardNotation
+            }
         }
 
         QQC2.Label {
@@ -108,6 +177,10 @@ Item {
             Layout.column: 1
 
             text: config.target.maximum
+
+            onTextEdited: {
+                config.changes();
+            }
 
             validator: DoubleValidator {
                 decimals: 4
