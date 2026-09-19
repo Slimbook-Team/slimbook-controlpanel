@@ -272,7 +272,6 @@ QQC2.Pane {
                         main.config = Object.assign({}, defaultConfig);
                         bridge.saveConfig(main.config);
                     }
-
                 }
 
                 if (main.config.logo !== undefined) {
@@ -293,6 +292,12 @@ QQC2.Pane {
                     main.config.rows = container.rows;
                 }
                 
+                if (main.config.showGrid == undefined) {
+                    console.log("generating a default value for showgrid");
+                    //main.config.showGrid = false;
+                    main.config["showGrid"] = false;
+                }
+
                 console.log("Layout size "+main.config.columns+"x"+main.config.rows);
                 
                 for (var i=0;i<main.config.layout.length;i++) {
@@ -424,7 +429,7 @@ QQC2.Pane {
                     text: "Configure"
 
                     onTriggered: {
-                        if (contextSlotMenu.target.objectName == "Value") {
+                        if (contextSlotMenu.target.objectName == "Value" || contextSlotMenu.target.objectName == "Badge") {
                             dialogConfig.target = contextSlotMenu.target;
                             dialogConfig.open();
                         }
@@ -782,7 +787,7 @@ QQC2.Pane {
                     
                     QQC2.CheckBox {
                         id: chkGrid
-                        checked: main.config["showGrid"]
+                        checked: main.config["showGrid"] == undefined ? false:true
                         text: "Show grid"
                         
                         onClicked: {
@@ -812,6 +817,7 @@ QQC2.Pane {
                             main.config["showGrid"] = (chkGrid.checkState == Qt.Checked);
                             settings.changes = false;
                             console.log("sample rate:",main.config["sample-rate"]);
+                            bridge.saveConfig(main.config);
                             main.reloadSettings();
                         }
                     }

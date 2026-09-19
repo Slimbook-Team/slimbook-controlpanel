@@ -15,6 +15,7 @@
     <file>ui/TDP.qml</file>
     <file>ui/Graph.qml</file>
     <file>ui/Badge.qml</file>
+    <file>ui/BadgeConfig.qml</file>
     <file>images/power-saver.svg</file>
     <file>images/balanced.svg</file>
     <file>images/performance.svg</file>
@@ -39,7 +40,10 @@
     <file>images/tray-base-light.svg</file>
 
     <file>images/badges/stripes.svg</file>
+    <file>images/badges/panel.svg</file>
+    <file>images/badges/panel-nostep.svg</file>
     <file>images/badges/boou.svg</file>
+    <file>images/badges/boou-jp.svg</file>
     <file>images/badges/tux.svg</file>
 </qresource>
 </RCC>

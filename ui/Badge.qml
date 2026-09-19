@@ -13,7 +13,7 @@ Slot {
     property string source: "../images/badges/stripes.svg"
     
     onClicked: {
-        var badges = ["stripes","boou","tux"];
+        var badges = ["stripes","panel","panel-nostep","boou","boou-jp","tux"];
         
         if (source.startsWith("../images/badges/")) {
             var n = source.lastIndexOf("/");
