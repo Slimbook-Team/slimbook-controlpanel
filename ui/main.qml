@@ -413,6 +413,8 @@ QQC2.Pane {
 
                 onAccepted:{
                     config.save();
+                    main.updateLayout();
+                    bridge.saveConfig(main.config);
                 }
 
                 onRejected: {
@@ -550,7 +552,6 @@ QQC2.Pane {
                             target: containerArea
                             
                             function onShowGridChanged() {
-                                console.log("yolo");
                                 containerCanvas.requestPaint();
                             }
                         }

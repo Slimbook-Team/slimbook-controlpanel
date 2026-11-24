@@ -15,6 +15,11 @@ UI.SlotConfig {
     onSave: {
         config.target.label = txtLabel.text;
         config.target.unit = txtUnit.text;
+        config.target.sensor = cmbSensor.currentSensor;
+        config.target.minimum = parseFloat(txtMinimum.text);
+        config.target.maximum = parseFloat(txtMaximum.text);
+        config.target.warning = parseFloat(txtWarning.text);
+        config.target.critical = parseFloat(txtCritical.text);
     }
 
     ListModel {
@@ -22,6 +27,8 @@ UI.SlotConfig {
     }
 
     GridLayout {
+        anchors.fill: parent
+
         QQC2.Label {
             Layout.row: 0
             Layout.column: 0
@@ -71,27 +78,40 @@ UI.SlotConfig {
             id: cmbSensor
             Layout.row: 2
             Layout.column: 1
+            property string currentSensor: ""
 
             model: tableModel
             textRole: "label"
 
             Component.onCompleted: {
+                var index = 0;
+
                 for (var item in bridge.sensorList) {
                     var sensorName = bridge.sensorList[item];
                     var sensorLabel = bridge.getSensorLabel(sensorName);
 
+                    var first = (sensorLabel.length > 0) ? "label:" + sensorLabel : sensorName;
+                    var second = (sensorLabel.length > 0) ? sensorLabel : sensorName;
+
                     tableModel.append(
                         {
-                            sensor: (sensorLabel.length > 0) ? "label:" + sensorLabel : sensorName,
-                            label: (sensorLabel.length > 0) ? sensorLabel : sensorName
+                            sensor: first,
+                            label: second
                         });
+
+                    if (config.target.sensor == first) {
+                        console.log("found initial match");
+                        cmbSensor.currentIndex = index;
+                    }
+
+                    index = index + 1;
                 }
 
-                /* this has some room for improvement */
-                cmbSensor.displayText = config.target.sensor.replace("label:","");
             }
 
             onActivated: {
+                cmbSensor.currentSensor = cmbSensor.model.get(currentIndex).sensor;
+                console.log(cmbSensor.currentSensor);
                 config.changes();
             }
         }
@@ -104,6 +124,7 @@ UI.SlotConfig {
         }
 
         QQC2.TextField {
+            id: txtWarning
             Layout.row: 3
             Layout.column: 1
 
@@ -127,6 +148,7 @@ UI.SlotConfig {
         }
 
         QQC2.TextField {
+            id: txtCritical
             Layout.row: 4
             Layout.column: 1
 
@@ -150,6 +172,7 @@ UI.SlotConfig {
         }
 
         QQC2.TextField {
+            id: txtMinimum
             Layout.row: 5
             Layout.column: 1
 
@@ -173,6 +196,7 @@ UI.SlotConfig {
         }
 
         QQC2.TextField {
+            id: txtMaximum
             Layout.row: 6
             Layout.column: 1
 
